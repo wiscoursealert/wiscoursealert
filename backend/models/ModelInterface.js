@@ -73,7 +73,7 @@ exports.getUserData = (user_id) => {
   // get courses
   let courses = []
   //let done1 = false
-  await db.select('course_id', 'sec_id').from('courses').where({
+  await db.select(['course_id', 'sec_id']).from('courses').where({
     user_id: user_id
   }).returning('*')
   .then((course_ids, sec_ids) => {
@@ -109,7 +109,7 @@ exports.getUserData = (user_id) => {
   let email = ''
   let delay = -1
   //let done2 = false
-  await db.select('email', 'delay').from('users').where({
+  await db.select(['email', 'delay']).from('users').where({
     user_id: user_id
   }).returning('*')
   .then(emails, delays => {
