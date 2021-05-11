@@ -8,7 +8,7 @@ const db = require('knex')({
   }
 });
 
-// Registrar
+//registrar
 exports.checkEmailExists = (email) => {
   let exist = true
   await db.select('email').from('users').where({
@@ -66,14 +66,14 @@ exports.checkUserIDExists = (user_id) => {
   return exist
 }
 
-// Updater
+//Updater
 exports.getUserData = (user_id) => {
   let result = true
 
   // get courses
   let courses = []
-  //let done1 = false
-  await db.select('course_id', 'sec_id').from('courses').where({
+  let done1 = false
+  db.select('course_id', 'sec_id').from('courses').where({
     user_id: user_id
   }).returning('*')
   .then((course_ids, sec_ids) => {
@@ -99,17 +99,15 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
-  /*
   .finally(() => {
     done1 = true
   })
-  */
 
   // get email and delay time
   let email = ''
   let delay = -1
-  //let done2 = false
-  await db.select('email', 'delay').from('users').where({
+  let done2 = false
+  db.select('email', 'delay').from('users').where({
     user_id: user_id
   }).returning('*')
   .then(emails, delays => {
@@ -120,14 +118,12 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
-  /*
   .finally(() => {
     done2 = true
   })
-  */
 
   // wait for both requests
-  //while(!done1 || !done2){}       // Q: are we able to do this without using await on each?
+  while(!done1 || !done2){}
 
   if(!result){
     return false
