@@ -99,9 +99,11 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
+  /*
   .finally(() => {
     done1 = true
   })
+  */
 
   // get email and delay time
   let email = ''
@@ -118,12 +120,14 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
+  /*
   .finally(() => {
     done2 = true
   })
+  */
 
   // wait for both requests
-  while(!done1 || !done2){}
+  //while(!done1 || !done2){}       Q: will this work instead of awaiting each?
 
   if(!result){
     return false
