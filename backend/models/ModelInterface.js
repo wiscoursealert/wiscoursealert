@@ -157,7 +157,7 @@ exports.updateUserData = (user_id, user_data) => {
 
   var i;  
   await db.transaction( update => {
-    for(i=0; i<length(user_data.reserved_section); i++){
+    for(i=0; i<user_data.reserved_section.length; i++){
       update.insert({
         user_id: user_icd,
         courses_name: user_data.course_name,
