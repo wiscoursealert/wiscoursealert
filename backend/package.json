@@ -9,6 +9,7 @@
   "author": "P2T",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "knex": "^0.95.4"
   }
