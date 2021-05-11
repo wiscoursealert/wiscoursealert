@@ -8,7 +8,7 @@ const db = require('knex')({
   }
 });
 
-// Registrar
+//registrar
 exports.checkEmailExists = (email) => {
   let exist = true
   await db.select('email').from('users').where({
@@ -66,7 +66,7 @@ exports.checkUserIDExists = (user_id) => {
   return exist
 }
 
-// Updater
+//Updater
 exports.getUserData = (user_id) => {
   let result = true
 
@@ -99,11 +99,9 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
-  /*
   .finally(() => {
     done1 = true
   })
-  */
 
   // get email and delay time
   let email = ''
@@ -120,14 +118,12 @@ exports.getUserData = (user_id) => {
     result = false
     console.error(err)
   })
-  /*
   .finally(() => {
     done2 = true
   })
-  */
 
   // wait for both requests
-  //while(!done1 || !done2){}       // Q: are we able to do this without using await on each?
+  while(!done1 || !done2){}
 
   if(!result){
     return false
@@ -161,7 +157,7 @@ exports.updateUserData = (user_id, user_data) => {
 
   var i;  
   await db.transaction( update => {
-    for(i=0; i<length(user_data.reserved_section); i++){
+    for(i=0; i<user_data.reserved_section.length; i++){
       update.insert({
         user_id: user_icd,
         courses_name: user_data.course_name,
