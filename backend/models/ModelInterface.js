@@ -2,14 +2,14 @@ const db = require('knex')({
   client: 'pg',
   connection: {
     host : '127.0.0.1',
-    user : 'user',      // placeholder
-    password : 'pw',
+    user : 'postgres',      // placeholder
+    password : 'admin',
     database : 'wisc-course-alert-test'
   }
 });
 
 //registrar
-exports.checkEmailExists = (email) => {
+exports.checkEmailExists = async (email) => {
   let exist = true
   await db.select('email').from('users').where({
     email: email
@@ -28,7 +28,7 @@ exports.checkEmailExists = (email) => {
   return exist
 }
 
-exports.addNewUser = (email, user_id, delay) => {
+exports.addNewUser = async (email, user_id, delay) => {
   let result = true
   await db.transaction(trx => {
     trx.insert({
@@ -47,7 +47,7 @@ exports.addNewUser = (email, user_id, delay) => {
   return result
 }
 
-exports.checkUserIDExists = (user_id) => {
+exports.checkUserIDExists = async (user_id) => {
   let exist = true
   await db.select('user_id').from('users').where({
     user_id: user_id
@@ -67,7 +67,7 @@ exports.checkUserIDExists = (user_id) => {
 }
 
 //Updater
-exports.getUserData = (user_id) => {
+exports.getUserData = async (user_id) => {
   let result = true
 
   // get courses
@@ -76,12 +76,12 @@ exports.getUserData = (user_id) => {
   await db.select(['course_id', 'sec_id']).from('courses').where({
     user_id: user_id
   }).returning('*')
-  .then((course_ids, sec_ids) => {
+  .then((rows) => {
     let last_course_id = -1;
-    for(let i = 0; i < course_ids.length; i++){
+    for(let i = 0; i < rows.length; i++){
       // extract variables
-      let course_id = course_ids[i]
-      let sec_id = sec_ids[i]
+      let course_id = rows[i].course_id
+      let sec_id = rows[i].sec_id
 
       // check if this is a new course
       if(course_id != last_course_id){
@@ -112,9 +112,9 @@ exports.getUserData = (user_id) => {
   await db.select(['email', 'delay']).from('users').where({
     user_id: user_id
   }).returning('*')
-  .then(emails, delays => {
-    email = emails[0]
-    delay = delays[0]
+  .then((rows) => {
+    email = rows[0].email
+    delay = rows[0].delay
   })
   .catch(err => {
     result = false
@@ -140,7 +140,7 @@ exports.getUserData = (user_id) => {
   }
 }
 
-exports.updateUserData = (user_id, user_data) => {
+exports.updateUserData = async (user_id, user_data) => {
 
   var success = true
   //delete all
