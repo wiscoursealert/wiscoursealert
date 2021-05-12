@@ -1,9 +1,25 @@
-// import
+//////////////////////////
+//// Imports
+//////////////////////////
+
+// import config
+const config = require('../config');
+
+// import libraries
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+// launch loader
+//require('../loaders')
+
+// import other components
 const model = require('../models/ModelInterface.js');
-const config = require('../config');
+
+
+//////////////////////////
+//// Initialize server
+//////////////////////////
 
 // init the server
 const app = express();
@@ -16,6 +32,11 @@ app.use(bodyParser.json());
 app.listen(config.port, () => {
   console.log('App is running on port %d', config.port);
 })
+
+
+//////////////////////////
+//// Routes
+//////////////////////////
 
 app.get('/', (req, res) => {
   res.json("It works!")
