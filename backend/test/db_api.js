@@ -2,8 +2,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const PORT = 3001;
 const model = require('../models/ModelInterface.js');
+const config = require('../config');
 
 // init the server
 const app = express();
@@ -13,8 +13,8 @@ app.use(cors())
 app.use(bodyParser.json());
 
 // begin
-app.listen(PORT, () => {
-  console.log('App is running on port %d', PORT);
+app.listen(config.port, () => {
+  console.log('App is running on port %d', config.port);
 })
 
 app.get('/', (req, res) => {
