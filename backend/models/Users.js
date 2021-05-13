@@ -22,8 +22,7 @@ const UserSchema = mongoose.Schema({
       section_id: {
         type: Number,
         required: true
-      },
-      timestamp: Date
+      }
     }]
   }]
 });

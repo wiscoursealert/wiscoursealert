@@ -61,38 +61,24 @@ manageResults_ = (results) => {
     section_data.prev_status = section_data.status 
     section_data.status = section.status
 
-    // choose response if appropriate
+    // should notify?
     if((section_data.prev_status == "closed" && section_data.status == "waitlist") ||
        (section_data.prev_status == "closed" && section_data.status == "open") ||
        (section_data.prev_status == "waitlist" && section_data.status == "open")){
-      let emails = section_data.subscriber_email
+
       // find each person
-      for(let email in emails){
+      for(let subscriber in section_data.subscribers){
+        // get user details
+        let email = subscriber.email
+        let last_sent = subscriber.last_sent
         let user = userModel.findEmail(email)
-        let will_send = false
-        // find the section info (for delay)
-        for(user_course in user.subscribed){      // O(course subbed + sections subbed)
-          if(user_course.course_id == course_id){
-            for(user_section in user_course.sections){
-              if(user_section.section_id == sec_id){
-                last_sent = user_section.timestamp
-                delay = user.delay
-                if(null){     // TODO: check if last_sent and delay is proper
-                  // TODO: set last_sent to now
-                  will_send = true
-                }
-                break
-              }
-            }
-            break
-          }
-        }
-        if(will_send){
+        let delay = user.delay
+
+        if(null){     // TODO: check if last_sent and delay is proper
+          subscriber.last_sent = null     // TODO: set last_sent to now
           // TODO: mail this person by emitting event
           // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email
-          userModel.updateUser(user)
         }
-        
       }
     }
   }

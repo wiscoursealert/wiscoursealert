@@ -10,7 +10,16 @@ const CourseSchema = mongoose.Schema({
       type: String,
       required: true
     },
-    subscriber_email: [String],
+    subscribers: [{
+      email: {
+        type: String,
+        required: true
+      },
+      last_sent: {
+        type: Date,
+        default: "null"
+      }
+    }],
     status: {
       type: String,
       default: "unknown"
