@@ -4,15 +4,18 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
-  "author": "P2T",
+  "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
-    "knex": "^0.95.4",
-    "pg": "^8.6.0"
+    "mongoose": "^5.12.8",
+    "nodemon": "^2.0.7",
+    "set-interval-async": "^2.0.3",
+    "uuid": "^8.3.2"
   }
 }
