@@ -16,7 +16,7 @@ require('./models/Courses');
 mongoose.connect(
   process.env.MONGODB_URI, 
   { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, 
-  () => console.log('Connected to db!')
+  () => console.log('Connected to DB.')
 );
 
 require('./services/updater');
