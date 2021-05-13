@@ -13,20 +13,13 @@ const UserSchema = mongoose.Schema({
     type: Number,
     default: 15
   },
-  subscribed: {
-    course_id: {
-      type: [Number],
-      default: []
-    },
-    section: {
-      type: [Number],
-      default: []
-    },
-    timestamp: {
-      type: [Date],
-      default: []
-    },
-  }
+  subscribed: [{
+    course_id: Number,
+    sections: [{
+      section_id: Number,
+      timestamp: Date
+    }]
+  }]
 });
 
 module.exports = mongoose.model('Users', UserSchema);

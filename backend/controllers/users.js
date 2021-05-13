@@ -6,14 +6,14 @@ const userModel = require('../models/Users');
 
 const userController = {};
 
-userController.get = async (req, res) => {
+userController.getUser = async (req, res) => {
   try {
     const users = await userModel.findUserID(req.body.user_id);
     if (users.length === 1) {
       res.json(users);
     }
     else {
-      res.status(500).json({ message: 'Error: user_id not found' });
+      res.status(500).json({ message: 'Error: user_id does not exist' });
     }
   }
   catch (err) {
@@ -21,7 +21,7 @@ userController.get = async (req, res) => {
   }
 }
 
-userController.post = async (req, res) => {
+userController.addUser = async (req, res) => {
   try {
     const users = await userModel.findEmail(req.body.email);
     if (users.length === 0) {
@@ -40,7 +40,7 @@ userController.post = async (req, res) => {
   }
 }
 
-userController.put = async (req, res) => {
+userController.updateUser = async (req, res) => {
   try {
     const users = await userModel.findUserID(req.body.user.user_id);
     if (users.length === 1) {
@@ -48,7 +48,7 @@ userController.put = async (req, res) => {
       res.json(updatedUser);
     }
     else {
-      res.status(500).json({ message: 'Error: user_id not found' });
+      res.status(500).json({ message: 'Error: user_id does not exist' });
     }
   }
   catch (err) {
