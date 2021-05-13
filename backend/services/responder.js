@@ -19,7 +19,9 @@ manageResults_ = (results) => {
   
   // check each section in the result
   let secs_dict = {}
-  for(let section in results){
+  for(let i = 0; i < results.length; i++){
+    let section = results[i]
+
     // find section id
     let sec_id = section.id
 
@@ -29,7 +31,9 @@ manageResults_ = (results) => {
     // find lec/dis number
     let lec_num = null
     let dis_num = null
-    for(let secprop in section.sections){
+    for(let j = 0; j < section.sections.length; j++){
+      let secprop = section.sections[j]
+
       // this has lecture
       if(secprop.type == "LEC"){
         lec_num = secprop.sectionNumber
@@ -50,7 +54,9 @@ manageResults_ = (results) => {
 
   // check each section in the database
   let course_data = courseModel.getCourse(course_id)
-  for(let section_data in course_data.sections){
+  for(let i = 0; i < course_data.sections.length; i++){
+    let section_data = course_data.sections[i]
+
     // get section id
     let sec_id = section_data.section_id
 
@@ -67,7 +73,9 @@ manageResults_ = (results) => {
        (section_data.prev_status == "waitlist" && section_data.status == "open")){
 
       // find each person
-      for(let subscriber in section_data.subscribers){
+      for(let j = 0; j < section_data.subscribers.length; j++){
+        let subscriber = section_data.subscribers[j]
+
         // get user details
         let email = subscriber.email
         let last_sent = subscriber.last_sent
