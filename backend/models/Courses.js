@@ -12,16 +12,16 @@ const CourseSchema = mongoose.Schema({
     },
     subscriber_email: [String],
     status: {
-      type: Number,
+      type: String,
       default: 0
     },
     prev_status: {
-      type: Number,
+      type: String,
       default: 0
     }
   }]
 });
 
-module.exports = mongoose.model('Courses', CourseSchema);
+// status can be 'open', 'waitlist', 'closed', or 'unknown'
 
-// hello
+module.exports = mongoose.model('Courses', CourseSchema);
