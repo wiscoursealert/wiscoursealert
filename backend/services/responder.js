@@ -3,7 +3,7 @@ const userModel = require('../models/Users');
 const lister = require('./lister');
 
 // interface
-manageResults = (results) => {
+manageResults = (results) => {      // TODO: test this whole thing
   try{
     manageResults_(results)
   }
@@ -62,6 +62,7 @@ manageResults_ = (results) => {
 
     // locate new data of this section
     let section = secs_dict[sec_id]
+    // TODO: handle missing new data of this section
 
     // update status
     section_data.prev_status = section_data.status 
