@@ -14,9 +14,15 @@ const UserSchema = mongoose.Schema({
     default: 15
   },
   subscribed: [{
-    course_id: Number,
+    course_id: {
+      type: Number,
+      required: true
+    },
     sections: [{
-      section_id: Number,
+      section_id: {
+        type: Number,
+        required: true
+      },
       timestamp: Date
     }]
   }]

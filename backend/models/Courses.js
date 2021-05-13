@@ -23,3 +23,5 @@ const CourseSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model('Courses', CourseSchema);
+
+// hello
