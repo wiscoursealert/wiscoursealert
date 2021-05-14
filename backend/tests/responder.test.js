@@ -1,4 +1,4 @@
-const dbHandler = require('./db-handler')
+const mongoose = require('./mocks/mongoose')
 const responder = require('../services/responder')
 const courseModel = require('../models/Courses')
 const userModel = require('../models/Users')
@@ -6,17 +6,17 @@ const userModel = require('../models/Users')
 /**
  * Connect to a new in-memory database before running any tests.
  */
-beforeAll(async () => await dbHandler.connect());
+beforeAll(async () => await mongoose.connect());
 
 /**
  * Clear all test data after every test.
  */
-afterEach(async () => await dbHandler.clearDatabase());
+afterEach(async () => await mongoose.clearDatabase());
 
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => await mongoose.closeDatabase());
 
 mockDbData1 = async () => {
   await courseModel.addCourse({
