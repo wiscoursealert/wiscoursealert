@@ -161,7 +161,7 @@ test('test1', async () => {
     section_id: "CS101_S04"
   }]
 
-  const res = await responder(mockResult, true)
+  const res = await responder.respond(mockResult, true)
   res.sort((x, y) => (x.email > y.email)? 1:-1)
 
   expect(res).toMatchObject(expected)
