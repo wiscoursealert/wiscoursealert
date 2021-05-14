@@ -18,14 +18,14 @@ afterEach(async () => await dbHandler.clearDatabase());
  */
 afterAll(async () => await dbHandler.closeDatabase());
 
-test('test1', async () => {
+mockDbData1 = async () => {
   await courseModel.addCourse({
     course_id: "CS101",
     sections: [{
       section_id: "CS101_S01",
       subscribers: [
-        { email: "guy1-1@mail.com", last_sent: 0},
-        { email: "guy1-2@mail.com", last_sent: 0}
+        { email: "guy1-1@mail.com", last_sent: Date.now() - 10*(60*1000)},
+        { email: "guy1-2@mail.com", last_sent: Date.now() - 20*(60*1000)}
       ],
       status: "OPEN",
       prev_status: "unknown"
@@ -33,8 +33,8 @@ test('test1', async () => {
     {
       section_id: "CS101_S02",
       subscribers: [
-        { email: "guy2-1@mail.com", last_sent: 0},
-        { email: "guy2-2@mail.com", last_sent: 0}
+        { email: "guy2-1@mail.com", last_sent: Date.now() - 10*(60*1000)},
+        { email: "guy2-2@mail.com", last_sent: Date.now() - 20*(60*1000)}
       ],
       status: "WAITLISTED",
       prev_status: "unknown"
@@ -42,8 +42,8 @@ test('test1', async () => {
     {
       section_id: "CS101_S03",
       subscribers: [
-        { email: "guy3-1@mail.com", last_sent: 0},
-        { email: "guy3-2@mail.com", last_sent: 0}
+        { email: "guy3-1@mail.com", last_sent: Date.now() - 10*(60*1000)},
+        { email: "guy3-2@mail.com", last_sent: Date.now() - 20*(60*1000)}
       ],
       status: "WAITLISTED",
       prev_status: "unknown"
@@ -51,8 +51,8 @@ test('test1', async () => {
     {
       section_id: "CS101_S04",
       subscribers: [
-        { email: "guy4-1@mail.com", last_sent: 0},
-        { email: "guy4-2@mail.com", last_sent: 0}
+        { email: "guy4-1@mail.com", last_sent: Date.now() - 10*(60*1000)},
+        { email: "guy4-2@mail.com", last_sent: Date.now() - 20*(60*1000)}
       ],
       status: "CLOSED",
       prev_status: "unknown"
@@ -93,7 +93,10 @@ test('test1', async () => {
     user_id: "U4-2",
     email: "guy4-2@mail.com"
   })
-  
+}
+
+test('test1', async () => {
+  await mockDbData1()
   mockResult = [
     {
       "id": "CS101_S01",
@@ -149,6 +152,17 @@ test('test1', async () => {
     }
   ]
 
+  const expected = [{
+    email: "guy2-2@mail.com",
+    section_id: "CS101_S02"
+  },
+  {
+    email: "guy4-2@mail.com",
+    section_id: "CS101_S04"
+  }]
+
   const res = await responder(mockResult, true)
-  console.log(res)
+  res.sort((x, y) => (x.email > y.email)? 1:-1)
+
+  expect(res).toMatchObject(expected)
 })

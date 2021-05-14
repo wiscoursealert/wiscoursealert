@@ -92,7 +92,7 @@ manageResults_ = async (results, test=false) => {
         let email = subscriber.email
         let last_sent = subscriber.last_sent
         const user = (await userModel.findEmail(email))[0]
-        let delay = user.delay                    // minutes      TODO: test this (currently delay always = 15)
+        let delay = user.delay                    // minutes
 
         // check if last_sent and delay is proper
         let current_time = Date.now()
