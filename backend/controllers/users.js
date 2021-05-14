@@ -1,59 +1,35 @@
-const mongoose = require('mongoose');
-const User = mongoose.model('Users');
-const { v4: uuid_v4 } = require('uuid');
+const register = require('../services/register');
 
-const userModel = require('../models/Users');
+const usersController = {};
 
-const userController = {};
-
-userController.getUser = async (req, res) => {
+usersController.getUser = async (req, res) => {
   try {
-    const users = await userModel.findUserID(req.body.user_id);
-    if (users.length === 1) {
-      res.json(users);
-    }
-    else {
-      res.status(500).json({ message: 'Error: user_id does not exist' });
-    }
+    const user = await register.getUser(req.body.user_id);
+    res.json(user);
   }
   catch (err) {
     res.status(500).json({ message: err });
   }
 }
 
-userController.addUser = async (req, res) => {
+usersController.addUser = async (req, res) => {
   try {
-    const users = await userModel.findEmail(req.body.email);
-    if (users.length === 0) {
-      const newUser = await userModel.addUser({ 
-        user_id: uuid_v4(),
-        email: req.body.email
-      });
-      res.json(newUser);
-    }
-    else {
-      res.status(500).json({ message: 'Error: this email is already existed' });
-    }
+    const newUser = await register.addUser(req.body.email);
+    res.json(newUser);
   }
   catch (err) {
     res.status(500).json({ message: err });
   }
 }
 
-userController.updateUser = async (req, res) => {
+usersController.updateUser = async (req, res) => {
   try {
-    const users = await userModel.findUserID(req.body.user.user_id);
-    if (users.length === 1) {
-      const updatedUser = await userModel.updateUser(req.body.user);
-      res.json(updatedUser);
-    }
-    else {
-      res.status(500).json({ message: 'Error: user_id does not exist' });
-    }
+    const updatedUser = await register.updateUser(req.body.user_id, req.body);
+    res.json(updatedUser);
   }
   catch (err) {
     res.status(500).json({ message: err });
   }
 }
 
-module.exports = userController;
+module.exports = usersController;
