@@ -17,7 +17,7 @@ const CourseSchema = mongoose.Schema({
       },
       last_sent: {
         type: Date,
-        default: "null"
+        default: 0
       }
     }],
     status: {
