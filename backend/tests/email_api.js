@@ -42,9 +42,10 @@ app.post('/notify', async (req, res) => {
   discussion_name = req.body.discussion_name
   prev_status = req.body.prev_status
   new_status = req.body.new_status
-  email = req.body.email
+  user_id = req.body.user_id
+  user_email = req.body.user_email
   
-  success = await mailer.notify(course_name, lecture_name, discussion_name, prev_status, new_status, email)
+  success = await mailer.notify(user_id,user_email,course_name, lecture_name, discussion_name, prev_status, new_status)
 
   res.send( success )
 })
