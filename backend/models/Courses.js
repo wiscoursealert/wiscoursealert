@@ -47,4 +47,14 @@ courseModel.updateCourse = async (updated_course) => {
   return updatedCourse
 }
 
+courseModel.addCourse = async (adding_course) => {
+  const course = new Courses(adding_course);
+  const savedCourse = await course.save();
+  return savedCourse;
+}
+
+courseModel.getAll = () => {
+  return Courses.find({})         // async
+}
+
 module.exports = courseModel;
