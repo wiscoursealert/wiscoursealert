@@ -20,6 +20,7 @@
     "mongoose": "^5.12.8",
     "nodemailer": "^6.6.0",
     "nodemon": "^2.0.7",
+    "redis-mock": "^0.56.3",
     "set-interval-async": "^2.0.3",
     "uuid": "^8.3.2"
   },
@@ -28,6 +29,9 @@
     "mongodb-memory-server": "^6.9.6"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFilesAfterEnv": [
+      "./tests/mocks/index.js"
+    ]
   }
 }
