@@ -42,15 +42,15 @@ courseModel.getCourse = (course_id) => {
   return Courses.find({course_id: course_id})
 }
 
-courseModel.updateCourse = async (updated_course) => {
-  const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true})
-  return updatedCourse
-}
-
 courseModel.addCourse = async (adding_course) => {
   const course = new Courses(adding_course);
   const savedCourse = await course.save();
   return savedCourse;
+}
+
+courseModel.updateCourse = async (updated_course) => {
+  const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true})
+  return updatedCourse
 }
 
 courseModel.getAll = () => {
