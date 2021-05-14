@@ -1,11 +1,12 @@
 const courseModel = require('../models/Courses');
 const userModel = require('../models/Users');
-const lister = require('./lister');
+//const lister = require('./lister');
 
 // interface
-manageResults = (results) => {      // TODO: test this whole thing
+manageResults = async (results, test=false) => {
   try{
-    manageResults_(results)
+    const res = await manageResults_(results, test)
+    return res
   }
   catch (err){
     console.log("Responder error:")
@@ -13,9 +14,12 @@ manageResults = (results) => {      // TODO: test this whole thing
   }
 }
 
-manageResults_ = (results) => {
+manageResults_ = async (results, test=false) => {
   let course_id = results[0].courseId
-  let course_name = lister.getCourseName(course_id)
+  //let course_name = lister.getCourseName(course_id)       // TODO
+
+  // test only
+  let sents = []
   
   // check each section in the result
   let secs_dict = {}
@@ -53,7 +57,8 @@ manageResults_ = (results) => {
   }
 
   // check each section in the database
-  let course_data = courseModel.getCourse(course_id)
+  const course_data = (await courseModel.getCourse(course_id))[0]       // it returns list, even if it is singular in practice
+
   for(let i = 0; i < course_data.sections.length; i++){
     let section_data = course_data.sections[i]
 
@@ -86,21 +91,31 @@ manageResults_ = (results) => {
         // get user details
         let email = subscriber.email
         let last_sent = subscriber.last_sent
-        let user = userModel.findEmail(email)
-        let delay = user.delay                    // minutes
+        const user = (await userModel.findEmail(email))[0]
+        let delay = user.delay                    // minutes      TODO: test this (currently delay always = 15)
 
         // check if last_sent and delay is proper
         let current_time = Date.now()
-        if((current_time - last_sent)/(1000*60) >= delay){     
+        if((current_time - last_sent)/(1000*60) >= delay){                  
           subscriber.last_sent = current_time     // set last_sent to now
           // TODO: mail this person by emitting event
-          // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email
+          // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email, user_id
+          if(test){
+            sents.push({
+              email: email,
+              section_id: sec_id
+            })
+          }
         }
       }
     }
   }
   // update database
   courseModel.updateCourse(course_data)
+
+  if(test){
+    return sents
+  }
 }
 
 module.exports = manageResults
