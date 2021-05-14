@@ -1,15 +1,15 @@
+//// Load express
 const express = require('express'),
-      mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
       cors = require('cors');
+
+      
+//// Load config
 require('dotenv/config')
 
-const app = express();
 
-app.use(express.json({ 'extended': false }));
-app.use(cors());
-app.use(bodyParser.json());
-
+//// Load database
+const mongoose = require('mongoose');
 require('./models/Users');
 require('./models/Courses');
 
@@ -19,7 +19,17 @@ mongoose.connect(
   () => console.log('Connected to DB.')
 );
 
+
+//// Load other services
 require('./services/updater');
+
+
+//// Initialize app
+const app = express();
+
+app.use(express.json({ 'extended': false }));
+app.use(cors());
+app.use(bodyParser.json());
 
 app.use(require('./routes'));
 

@@ -10,18 +10,41 @@ const CourseSchema = mongoose.Schema({
       type: String,
       required: true
     },
-    subscriber_email: [String],
+    subscribers: [{
+      email: {
+        type: String,
+        required: true
+      },
+      last_sent: {
+        type: Date,
+        default: "null"
+      }
+    }],
     status: {
       type: String,
-      default: 0
+      default: "unknown"
     },
     prev_status: {
       type: String,
-      default: 0
+      default: "unknown"
     }
   }]
 });
 
-// status can be 'open', 'waitlist', 'closed', or 'unknown'
+// status can be 'OPEN', 'WAITLISTED', 'CLOSED', or 'unknown'
 
 module.exports = mongoose.model('Courses', CourseSchema);
+
+const Courses = mongoose.model('Courses');
+const courseModel = {}
+
+courseModel.getCourse = (course_id) => {
+  return Courses.find({course_id: course_id})
+}
+
+courseModel.updateCourse = (updated_course) => {
+  const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true})
+  return updatedCourse
+}
+
+module.exports = courseModel;
