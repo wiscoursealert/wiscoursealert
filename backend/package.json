@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": "nodemon tests/email_api.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,7 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.12.8",
+    "nodemailer": "^6.6.0",
     "nodemon": "^2.0.7",
     "set-interval-async": "^2.0.3",
     "uuid": "^8.3.2"
