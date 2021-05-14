@@ -17,7 +17,7 @@ const CourseSchema = mongoose.Schema({
       },
       last_sent: {
         type: Date,
-        default: "null"
+        default: 0
       }
     }],
     status: {
@@ -42,9 +42,19 @@ courseModel.getCourse = (course_id) => {
   return Courses.find({course_id: course_id})
 }
 
-courseModel.updateCourse = (updated_course) => {
+courseModel.updateCourse = async (updated_course) => {
   const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true})
   return updatedCourse
+}
+
+courseModel.addCourse = async (adding_course) => {
+  const course = new Courses(adding_course);
+  const savedCourse = await course.save();
+  return savedCourse;
+}
+
+courseModel.getAll = () => {
+  return Courses.find({})         // async
 }
 
 module.exports = courseModel;
