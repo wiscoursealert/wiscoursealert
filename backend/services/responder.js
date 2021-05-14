@@ -26,7 +26,7 @@ manageResults_ = (results) => {
     let sec_id = section.id
 
     // find enrollment status
-    let status = null // TODO 
+    let status = section.packageEnrollmentStatus.status
 
     // find lec/dis number
     let lec_num = null
@@ -61,17 +61,23 @@ manageResults_ = (results) => {
     let sec_id = section_data.section_id
 
     // locate new data of this section
-    let section = secs_dict[sec_id]
-    // TODO: handle missing new data of this section
+    let section = null
+    try{
+      section = secs_dict[sec_id]
+    }
+    catch(err){
+      console.log("Section data not received from updater, skipping")
+      continue
+    }
 
     // update status
     section_data.prev_status = section_data.status 
     section_data.status = section.status
 
     // should notify?
-    if((section_data.prev_status == "closed" && section_data.status == "waitlist") ||
-       (section_data.prev_status == "closed" && section_data.status == "open") ||
-       (section_data.prev_status == "waitlist" && section_data.status == "open")){
+    if((section_data.prev_status == "CLOSED" && section_data.status == "WAITLISTED") ||
+       (section_data.prev_status == "CLOSED" && section_data.status == "OPEN") ||
+       (section_data.prev_status == "WAITLISTED" && section_data.status == "OPEN")){
 
       // find each person
       for(let j = 0; j < section_data.subscribers.length; j++){
@@ -81,10 +87,12 @@ manageResults_ = (results) => {
         let email = subscriber.email
         let last_sent = subscriber.last_sent
         let user = userModel.findEmail(email)
-        let delay = user.delay
+        let delay = user.delay                    // minutes
 
-        if(null){     // TODO: check if last_sent and delay is proper
-          subscriber.last_sent = null     // TODO: set last_sent to now
+        // check if last_sent and delay is proper
+        let current_time = Date.now()
+        if((current_time - last_sent)/(1000*60) >= delay){     
+          subscriber.last_sent = current_time     // set last_sent to now
           // TODO: mail this person by emitting event
           // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email
         }

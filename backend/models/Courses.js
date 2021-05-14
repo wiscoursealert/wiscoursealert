@@ -31,7 +31,7 @@ const CourseSchema = mongoose.Schema({
   }]
 });
 
-// status can be 'open', 'waitlist', 'closed', or 'unknown'
+// status can be 'OPEN', 'WAITLISTED', 'CLOSED', or 'unknown'
 
 module.exports = mongoose.model('Courses', CourseSchema);
 
