@@ -2,7 +2,7 @@ const courseModel = require('../models/Courses');
 
 const subscriber = {};
 
-touchCourse = async (course_id) => {
+findCourse = async (course_id) => {
   const courses = await courseModel.getCourse(course_id);
 
   var course;
@@ -16,8 +16,8 @@ touchCourse = async (course_id) => {
   return course;
 }
 
-touchSection = async (course_id, section_id) => {
-  const course = await touchCourse(course_id);
+findSection = async (course_id, section_id) => {
+  const course = await findCourse(course_id);
   const sectionIndex = course.sections.findIndex(section => {
     return section.section_id === section_id;
   });
@@ -30,11 +30,11 @@ touchSection = async (course_id, section_id) => {
 }
 
 subscribe = async (course_id, section_id, email) => {
-  const course = await touchSection(course_id, section_id);
+  const course = await findSection(course_id, section_id);
   course.sections = course.sections.map(section => {
     if (section.section_id === section_id) {
       // if section doesn't have this email, add it
-      if (section.subscribers.findIndex(user => user.email == email) === -1) {
+      if (section.subscribers.findIndex(user => user.email === email) === -1) {
         section.subscribers.push({ email: email });
       }
     }
@@ -45,7 +45,26 @@ subscribe = async (course_id, section_id, email) => {
 }
 
 unsubscribe = async (course_id, section_id, email) => {
+  const course = (await courseModel.getCourse(course_id))[0];
+  // remove email from this section
+  course.sections = course.sections.map(section => {
+    if (section.section_id === section_id) {
+      // remove email from this section
+      section.subscribers = section.subscribers.filter(subscriber => subscriber.email !== email);
+    }
+    return section;
+  });
+  // remove section without subscribers
+  course.sections = course.sections.filter(section => {
+    return section.subscribers.length !== 0;
+  });
 
+  const updatedCourse = await courseModel.updateCourse(course);
+  
+  // remove course with no sections
+  if (updatedCourse.sections.length === 0) {
+    courseModel.removeCourse(updatedCourse);
+  }
 }
 
 subscriber.updateUser = async (user, type) => {

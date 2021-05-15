@@ -20,6 +20,7 @@
     "mongoose": "^5.12.8",
     "nodemailer": "^6.6.0",
     "nodemon": "^2.0.7",
+    "package.json": "^2.0.1",
     "redis-mock": "^0.56.3",
     "set-interval-async": "^2.0.3",
     "uuid": "^8.3.2"
