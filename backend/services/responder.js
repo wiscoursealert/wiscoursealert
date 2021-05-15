@@ -1,6 +1,7 @@
 const courseModel = require('../models/Courses');
 const userModel = require('../models/Users');
-//const lister = require('./lister');
+const lister = require('./lister');
+const mailer = require('../subscribers/mailer')
 
 // interface
 const run = async (results, test=false) => {
@@ -17,7 +18,7 @@ const run = async (results, test=false) => {
 // test=true: return list of emails instead of submitting them
 manageResults = async (results, test=false) => {
   let course_id = results[0].courseId
-  //let course_name = lister.getCourseName(course_id)       // TODO
+  let course_name = lister.getCourseName(course_id)
 
   // return emails if testing
   let sents = []
@@ -94,6 +95,7 @@ manageResults = async (results, test=false) => {
         let last_sent = subscriber.last_sent
         const user = (await userModel.findEmail(email))[0]
         let delay = user.delay                    // minutes
+        let user_id = user.user_id
 
         // check if last_sent and delay is proper
         let current_time = Date.now()
@@ -107,10 +109,18 @@ manageResults = async (results, test=false) => {
               section_id: sec_id
             })
           }
-          // otherwise, mail this person by queuing
+          // otherwise, mail this person
           else{
-            // TODO: mail this person by queuing
-            // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email, user_id
+            mailParams = {
+              user_id: user_id, 
+              user_email: email, 
+              course_name: course_name, 
+              lecture_name: section.lec_num, 
+              discussion_name: section.dis_num, 
+              prev_status: section_data.prev_status, 
+              new_status: section_data.status
+            }
+            mailer.notify(mailParams)       // no need to await for anything
           }
         }
       }
