@@ -4,7 +4,7 @@ require('dotenv/config')
 
 mailer = {}
 
-mailer.notify = async (user_id, user_email, course_name, lecture_name, discussion_name, prev_status, new_status) => {
+mailer.notify = async ({user_id, user_email, course_name, lecture_name, discussion_name, prev_status, new_status}) => {
 
   ////
   subscription_link = linkGenerator(user_id);
@@ -67,7 +67,7 @@ generateHtml = (subscription_link) =>{
     return '<a href='+subscription_link+'>manage subscription</a>'
 }
 
-mailer.editSubscription = (user_email, subscription_link) =>{
+mailer.editSubscription = ({user_email, subscription_link}) =>{
 
 }
 
