@@ -35,7 +35,7 @@ register.updateUser = async (user_id, newUser) => {
     const user = users[0];
     await subscriber.updateUser(user, 'unsubscribe');
     const updatedUser = await userModel.updateUser(newUser);
-    await subscriber.updateUser(user, 'subscribe');
+    await subscriber.updateUser(updatedUser, 'subscribe');
     return updatedUser;
   }
   else {
