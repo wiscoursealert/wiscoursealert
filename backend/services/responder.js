@@ -12,12 +12,12 @@ const enqueue = (results) => {
   return respondQueue.createJob(results).save()
 }
 respondQueue.process(async (job) => {
-  const res = await manageResults_(job.data)
+  const res = await run(job.data)
   return res
 })
 
 // interface
-const manageResults_ = async (results, test=false) => {
+const run = async (results, test=false) => {
   try{
     const res = await manageResults(results, test)
     return res
@@ -28,11 +28,12 @@ const manageResults_ = async (results, test=false) => {
   }
 }
 
+// test=true: return list of emails instead of submitting them
 manageResults = async (results, test=false) => {
   let course_id = results[0].courseId
   //let course_name = lister.getCourseName(course_id)       // TODO
 
-  // test only
+  // return emails if testing
   let sents = []
   
   // check each section in the result
@@ -112,13 +113,18 @@ manageResults = async (results, test=false) => {
         let current_time = Date.now()
         if((current_time - last_sent)/(1000*60) >= delay){                  
           subscriber.last_sent = current_time     // set last_sent to now
-          // TODO: mail this person by emitting event
-          // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email, user_id
+
+          // if test --> just test this module, skip mailing
           if(test){
             sents.push({
               email: email,
               section_id: sec_id
             })
+          }
+          // otherwise, mail this person by queuing
+          else{
+            // TODO: mail this person by queuing
+            // course_name, section.lec_num, section.dis_num, section_data.prev_status, section_data.status, email, user_id
           }
         }
       }
@@ -126,12 +132,14 @@ manageResults = async (results, test=false) => {
   }
   // update database
   courseModel.updateCourse(course_data)
+
+  // if test, return results for evaluation
   if(test){
     return sents
   }
 }
 
 module.exports = {
-  enqueue: enqueue,
-  respond: manageResults_
+  enqueue: enqueue,             // using queue
+  run: run       // direct
 }
