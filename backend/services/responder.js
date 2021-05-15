@@ -1,11 +1,25 @@
+const config = require('../config');
+
 const courseModel = require('../models/Courses');
 const userModel = require('../models/Users');
 //const lister = require('./lister');
 
+const Queue = require('bee-queue');
+
+// task queue
+const respondQueue = new Queue('responder', config.queueOptions);
+const enqueue = (results) => {
+  return respondQueue.createJob(results).save()
+}
+respondQueue.process(async (job) => {
+  const res = await manageResults_(job.data)
+  return res
+})
+
 // interface
-manageResults = async (results, test=false) => {
+const manageResults_ = async (results, test=false) => {
   try{
-    const res = await manageResults_(results, test)
+    const res = await manageResults(results, test)
     return res
   }
   catch (err){
@@ -14,7 +28,7 @@ manageResults = async (results, test=false) => {
   }
 }
 
-manageResults_ = async (results, test=false) => {
+manageResults = async (results, test=false) => {
   let course_id = results[0].courseId
   //let course_name = lister.getCourseName(course_id)       // TODO
 
@@ -112,10 +126,12 @@ manageResults_ = async (results, test=false) => {
   }
   // update database
   courseModel.updateCourse(course_data)
-
   if(test){
     return sents
   }
 }
 
-module.exports = manageResults
+module.exports = {
+  enqueue: enqueue,
+  respond: manageResults_
+}
