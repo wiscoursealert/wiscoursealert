@@ -39,7 +39,7 @@ const Courses = mongoose.model('Courses');
 const courseModel = {}
 
 courseModel.getCourse = (course_id) => {
-  return Courses.find({course_id: course_id})
+  return Courses.find({course_id: course_id});
 }
 
 courseModel.addCourse = async (adding_course) => {
@@ -49,12 +49,16 @@ courseModel.addCourse = async (adding_course) => {
 }
 
 courseModel.updateCourse = async (updated_course) => {
-  const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true})
-  return updatedCourse
+  const updatedCourse = await Courses.findByIdAndUpdate(updated_course._id, updated_course, {new: true});
+  return updatedCourse;
+}
+
+courseModel.removeCourse = async (removing_course) => {
+  await Courses.deleteOne({ _id: removing_course._id });
 }
 
 courseModel.getAll = () => {
-  return Courses.find({})         // async
+  return Courses.find({});         // async
 }
 
 module.exports = courseModel;
