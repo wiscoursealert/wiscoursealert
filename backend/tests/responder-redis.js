@@ -1,5 +1,5 @@
 const mongoose = require('./mocks/mongoose')
-const responder = require('../services/responder')
+const responder = require('../subscribers/responder')
 const courseModel = require('../models/Courses')
 const userModel = require('../models/Users')
 
@@ -151,7 +151,7 @@ test = async () => {
   }]
   console.log("PASS 1")
 
-  await responder.enqueue(mockResult)
+  await responder(mockResult)
 
   console.log("PASS 2")
 

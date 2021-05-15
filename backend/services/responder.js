@@ -1,20 +1,6 @@
-const config = require('../config');
-
 const courseModel = require('../models/Courses');
 const userModel = require('../models/Users');
 //const lister = require('./lister');
-
-const Queue = require('bee-queue');
-
-// task queue
-const respondQueue = new Queue('responder', config.queueOptions);
-const enqueue = (results) => {
-  return respondQueue.createJob(results).save()
-}
-respondQueue.process(async (job) => {
-  const res = await run(job.data)
-  return res
-})
 
 // interface
 const run = async (results, test=false) => {
@@ -139,7 +125,4 @@ manageResults = async (results, test=false) => {
   }
 }
 
-module.exports = {
-  enqueue: enqueue,             // using queue
-  run: run       // direct
-}
+module.exports = run
