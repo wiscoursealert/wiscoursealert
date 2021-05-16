@@ -8,23 +8,24 @@ const Queue = require('bee-queue');
 const mailQueue = new Queue('mailer', config.queueOptions);
 const enqueue = {
   notify: (mailData) => {
-    jobData = {
+    let jobData = {
       param: mailData,
-      work: mailer.notify
+      work: "notify"
     }
+    console.log(jobData)
     return mailQueue.createJob(jobData).save()
   },
   editSubscription: (mailData) => {
-    jobData = {
+    let jobData = {
       param: mailData,
-      work: mailer.editSubscription
+      work: "editSubscription"
     }
     return mailQueue.createJob(jobData).save()
   }
 }
 
 mailQueue.process(async (job) => {
-  const res = await job.data.work(job.data.param)
+  const res = await mailer[job.data.work](job.data.param)
   return res
 })
 
