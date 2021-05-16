@@ -7,9 +7,10 @@ const responder = require('../subscribers/responder');
 const getCourseDetail = async (subject_id, course_id, termCode = "1222") => {
   const url = `https://public.enroll.wisc.edu/api/search/v1/enrollmentPackages/${termCode}/${subject_id}/${course_id}`;
   const results = await axios(url);
-  return results;
+  return results.data;
 }
 
+// repeat every 10 seconds
 const timer = setIntervalAsync(async () => {
 
   console.log('Hello :D');
@@ -24,6 +25,6 @@ const timer = setIntervalAsync(async () => {
     responder(results);
   }
 
-}, 1000);
+}, 10000);
 
 module.exports = timer;
