@@ -18,6 +18,14 @@ const UserSchema = mongoose.Schema({
       type: String,
       required: true
     },
+    course_name: {
+      type: String,
+      required: true
+    },
+    subject_id: {
+      type: String,
+      required: true
+    },
     sections: [{
       section_id: {
         type: String,
