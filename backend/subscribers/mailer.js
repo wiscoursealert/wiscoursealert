@@ -24,7 +24,7 @@ const enqueue = {
   }
 }
 
-mailQueue.process(async (job) => {
+mailQueue.process(config.workersMailer, async (job) => {
   const res = await mailer[job.data.work](job.data.param)
   return res
 })

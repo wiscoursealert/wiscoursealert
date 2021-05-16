@@ -9,7 +9,7 @@ const respondQueue = new Queue('responder', config.queueOptions);
 const enqueue = (results) => {
   return respondQueue.createJob(results).save()
 }
-respondQueue.process(async (job) => {
+respondQueue.process(config.workersResponder, async (job) => {
   const res = await responder(job.data)
   return res
 })

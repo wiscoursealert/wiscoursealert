@@ -11,3 +11,6 @@ const queueOptions = {
 }
 
 exports.queueOptions = queueOptions
+
+exports.workersResponder = 4
+exports.workersMailer = 4
