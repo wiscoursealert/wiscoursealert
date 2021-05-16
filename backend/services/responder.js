@@ -1,6 +1,5 @@
 const courseModel = require('../models/Courses');
 const userModel = require('../models/Users');
-const lister = require('./lister');
 const mailer = require('../subscribers/mailer')
 
 // interface
@@ -17,8 +16,7 @@ const run = async (results, test=false) => {
 
 // test=true: return list of emails instead of submitting them
 manageResults = async (results, test=false) => {
-  let course_id = results[0].courseId
-  let course_name = lister.getCourseName(course_id)
+  const course_id = results[0].courseId
 
   // return emails if testing
   let sents = []
@@ -26,19 +24,19 @@ manageResults = async (results, test=false) => {
   // check each section in the result
   let secs_dict = {}
   for(let i = 0; i < results.length; i++){
-    let section = results[i]
+    const section = results[i]
 
     // find section id
-    let sec_id = section.id
+    const sec_id = section.id
 
     // find enrollment status
-    let status = section.packageEnrollmentStatus.status
+    const status = section.packageEnrollmentStatus.status
 
     // find lec/dis number
     let lec_num = null
     let dis_num = null
     for(let j = 0; j < section.sections.length; j++){
-      let secprop = section.sections[j]
+      const secprop = section.sections[j]
 
       // this has lecture
       if(secprop.type == "LEC"){
@@ -60,12 +58,13 @@ manageResults = async (results, test=false) => {
 
   // check each section in the database
   const course_data = (await courseModel.getCourse(course_id))[0]       // it returns list, even if it is singular in practice
+  const course_name = course_data.course_name
 
   for(let i = 0; i < course_data.sections.length; i++){
     let section_data = course_data.sections[i]
 
     // get section id
-    let sec_id = section_data.section_id
+    const sec_id = section_data.section_id
 
     // locate new data of this section
     let section = null
@@ -91,14 +90,14 @@ manageResults = async (results, test=false) => {
         let subscriber = section_data.subscribers[j]
 
         // get user details
-        let email = subscriber.email
-        let last_sent = subscriber.last_sent
+        const email = subscriber.email
+        const last_sent = subscriber.last_sent
         const user = (await userModel.findEmail(email))[0]
-        let delay = user.delay                    // minutes
-        let user_id = user.user_id
+        const delay = user.delay                    // minutes
+        const user_id = user.user_id
 
         // check if last_sent and delay is proper
-        let current_time = Date.now()
+        const current_time = Date.now()
         if((current_time - last_sent)/(1000*60) >= delay){                  
           subscriber.last_sent = current_time     // set last_sent to now
 
@@ -111,7 +110,7 @@ manageResults = async (results, test=false) => {
           }
           // otherwise, mail this person
           else{
-            mailParams = {
+            const mailParams = {
               user_id: user_id, 
               user_email: email, 
               course_name: course_name, 

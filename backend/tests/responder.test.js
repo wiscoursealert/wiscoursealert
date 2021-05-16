@@ -21,6 +21,8 @@ afterAll(async () => await mongoose.closeDatabase());
 mockDbData1 = async () => {
   await courseModel.addCourse({
     course_id: "CS101",
+    course_name: "Outro to Quantum Super Machine-Learned Cryptocurrency",
+    subject_id: "COMPSCI007",
     sections: [{
       section_id: "CS101_S01",
       subscribers: [
