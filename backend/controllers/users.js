@@ -24,7 +24,10 @@ usersController.addUser = async (req, res) => {
 
 usersController.updateUser = async (req, res) => {
   try {
-    const updatedUser = await register.updateUser(req.body.user_id, req.body);
+    const updatedUser = await register.updateUser({ 
+      user_id: req.body.user_id, 
+      newUser: req.body
+    });
     res.json(updatedUser);
   }
   catch (err) {
