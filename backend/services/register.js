@@ -7,7 +7,6 @@ const register = {};
 register.getUser = async (user_id) => {
   const users = await userModel.findUserID(user_id);
   if (users.length === 1) {
-    console.log(users);
     return users[0];
   }
   else {
@@ -30,7 +29,6 @@ register.addUser = async (email) => {
 }
 
 register.updateUser = async ({ user_id, newUser }) => {
-  console.log()
   const users = await userModel.findUserID(user_id);
   if (users.length === 1) {
     const user = users[0];

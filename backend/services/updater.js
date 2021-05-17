@@ -1,50 +1,30 @@
 const { setIntervalAsync } = require('set-interval-async/fixed');
-const axios = require('axios').default;
+const axios = require('axios');
+const courseModel = require('../models/Courses');
+const responder = require('../subscribers/responder');
 
-// const getCourseList = async () => {
-//   const result = await axios.post('https://public.enroll.wisc.edu/api/search/v1/', {
-//     filters: [],
-//     pageSize: 2000,
-//     queryString: "*",
-//     selectedTerm: "1216",
-//     sortOrder: "SCORE"
-//   });
-//   const courses = await result.data.hits.map(entry => {
-//     return {
-//       course_id: entry.courseId,
-//       course_name: entry.courseDesignation
-//     }
-//   });
-//   return courses;
-// }
+// termCode = 1222 is for fall 2021
+const getCourseDetail = async (subject_id, course_id, termCode = "1222") => {
+  const url = `https://public.enroll.wisc.edu/api/search/v1/enrollmentPackages/${termCode}/${subject_id}/${course_id}`;
+  const results = await axios(url);
+  return results.data;
+}
 
+// repeat every 10 seconds
 const timer = setIntervalAsync(async () => {
-  console.log('Hello');
 
-  // update course database
-  //   1. access-database to get all subscribed sections
-  //   2. for each section(course), get sections and status from enroll.wisc api
-  //   3. for each course, update-to-database new status
+  console.log('Hello :D');
 
-  // get the list of courses that the status has changed
-  //   1. access-database to get courses
-  //   2. find sections that status has changed
+  const allCourse = await courseModel.getAll();
 
-  // send an email to users
-  //   1. access-database to get a list of users
-  //   2. for each user, find changed sections and customize notification message
-  //   3. call email service to send the notification
+  for (let i = 0; i < allCourse.length; i++) {
+    const course = allCourse[i];
+    // get course detail (containing sections)
+    const results = await getCourseDetail(course.subject_id, course.course_id);
+    // responder call
+    responder(results);
+  }
 
-
-  
-  // courses = getAllSubscribedCourses(); (Courses controller)
-
-  // for course in courses:
-  //   for section in course.section: 
-  //     get status (wisc api)
-  //     update database (Courses model)
-  //     send email (responder)
-
-}, 1000);
+}, 10000);
 
 module.exports = timer;

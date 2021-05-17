@@ -67,13 +67,10 @@ manageResults = async (results, test=false) => {
     const sec_id = section_data.section_id
 
     // locate new data of this section
-    let section = null
-    try{
-      section = secs_dict[sec_id]
-    }
-    catch(err){
-      console.log("Section data not received from updater, skipping")
-      continue
+    const section = secs_dict[sec_id];
+    if (typeof section === "undefined") {
+      console.log("Section data not received from updater, skipping");
+      continue;
     }
 
     // update status
