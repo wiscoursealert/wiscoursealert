@@ -35,6 +35,7 @@ manageResults = async (results, test=false) => {
     // find lec/dis number
     let lec_num = null
     let dis_num = null
+    let lab_num = null
     for(let j = 0; j < section.sections.length; j++){
       const secprop = section.sections[j]
 
@@ -46,13 +47,18 @@ manageResults = async (results, test=false) => {
       else if(secprop.type == "DIS"){
         dis_num = secprop.sectionNumber
       }
+      // this has lab
+      else if(secprop.type == "LAB"){
+        lab_num = secprop.sectionNumber
+      }
     }
 
     // pack for later use
     secs_dict[sec_id] = {
       status: status,
       lec_num: lec_num,
-      dis_num: dis_num
+      dis_num: dis_num,
+      lab_num: lab_num
     }
   }
 
@@ -113,6 +119,7 @@ manageResults = async (results, test=false) => {
               course_name: course_name, 
               lecture_name: section.lec_num, 
               discussion_name: section.dis_num, 
+              lab_name: section.lab_num,
               prev_status: section_data.prev_status, 
               new_status: section_data.status
             }
