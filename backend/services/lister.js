@@ -67,8 +67,11 @@ lister.getSections = async (subject_id, course_id) => {
             discussion_name: entry.sections.filter(x => x.type=="DIS")
             .map(x => {
                 return x.sectionNumber
+            })[0],
+            Lab_name: entry.sections.filter(x => x.type=="LAB")
+            .map(x => {
+                return x.sectionNumber
             })[0]
-
         }
         } )
     return sections
