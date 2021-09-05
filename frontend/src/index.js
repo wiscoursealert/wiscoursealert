@@ -2,14 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Register from './pages/Register';
-import RegisterComplete from './pages/RegisterComplete'
 import reportWebVitals from './reportWebVitals';
-import { ChakraProvider } from "@chakra-ui/react"
+import { ChakraProvider, Flex } from "@chakra-ui/react"
+import SectionBoxes from './containers/SectionBoxes';
+import CourseBox from './components/CourseBox';
 
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider>
-      <RegisterComplete />
+      <Flex>
+        <CourseBox/>
+      </Flex>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
