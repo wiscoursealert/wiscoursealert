@@ -25,7 +25,7 @@ function CourseBox() {
     //   <Text fontSize='2xl' fontWeight='bold'>{property.course_name}</Text>
     //   <Text fontSize='xl' fontWeight='bold'>{property.course_name}</Text>
     // </Box>
-    <Box p={4} width={{ base: "15em", sm: "20rem", md: "20rem"}} borderRadius='1em' borderWidth='0.1em' borderColor='gray.400'>
+    <Box p={4} width={{ base: "15em", sm: "15rem", md: "20rem"}} borderRadius='1em' borderWidth='0.1em' borderColor='gray.400' m="0.5rem">
       <Box mt={{ base: 4, md: 0 }} ml={{ md: 2 }}>
         <Text
           fontWeight="thick"
