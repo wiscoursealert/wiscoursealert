@@ -16,7 +16,7 @@ function SectionBox(props) {
     bg = '#D8524E'
   }
   return (
-    <Flex bg={bg} color='white' h='fit-content' w='100%' alignItems='center' justifyContent='space-between' py='0.6rem' px='1.2rem' fontSize={textSize} borderRadius='0.5rem' my='0.1rem'>
+    <Flex bg={bg} color='white' h='fit-content' w='100%' alignItems='center' justifyContent='space-between' py='0.4rem' px='1.2rem' fontSize={textSize} borderRadius='0.5rem' my='0.1rem'>
       <Text>LEC 001 / DIS 001</Text>
       <Text>×</Text>
     </Flex>
