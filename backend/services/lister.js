@@ -9,7 +9,7 @@ lister.getSearchResults = async (queryString) => {
     payload = {
       // may change later
       page: 1, // scroll down == increase page
-      pageSize: 20, // display course per page
+      pageSize: 7000, // display course per page
       queryString: queryString,
       selectedTerm: "1222",
       sortOrder: "SCORE",
@@ -52,7 +52,6 @@ lister.getSections = async (subject_id, course_id) => {
     "/" +
     course_id +
     "/";
-  console.log("GET url:", url);
   api_req = await axios.get(url);
   /* format
     [       {   "section_id": "32635",

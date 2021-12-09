@@ -13,7 +13,6 @@ listerController.getSearchResults = async (req, res) => {
 };
 
 listerController.getSections = async (req, res) => {
-  console.log(req.body);
   try {
     const temp = await lister.getSections(
       req.body.subject_id,
