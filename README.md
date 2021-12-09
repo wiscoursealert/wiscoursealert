@@ -27,7 +27,6 @@ pip install streamlit watchdog
 ```shell
 cd backend
 node app.js
-cd ..
 ```
 
 2. Run front-end
@@ -35,5 +34,4 @@ cd ..
 ```shell
 cd frontend
 streamlit run app.py
-cd ..
 ```
