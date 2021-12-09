@@ -52,6 +52,7 @@ lister.getSections = async (subject_id, course_id) => {
     "/" +
     course_id +
     "/";
+  console.log("GET url:", url);
   api_req = await axios.get(url);
   /* format
     [       {   "section_id": "32635",
