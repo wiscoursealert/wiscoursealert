@@ -1,5 +1,5 @@
 import streamlit as st
-from pages import subscribe, home, utils
+from components import subscribe, home, utils
 from PIL import Image
 
 st.set_page_config(layout='wide', page_title='Wiscoursealert',

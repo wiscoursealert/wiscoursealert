@@ -1,6 +1,5 @@
 import streamlit as st
-from .api import get_user, get_sections
-from pprint import pprint
+from .api import get_course_search, get_user, get_sections
 
 
 def initialize():
@@ -8,7 +7,13 @@ def initialize():
         return
     st.session_state['initialized'] = True
     st.session_state['user_id'] = None
-    print('streamlit initialized')
+    st.session_state['selected_courses'] = None
+    st.session_state['all_courses'] = get_course_search('*')
+    course_map = {}
+    for course in st.session_state['all_courses']:
+        course_map[course['course_id']] = course['course_name']
+    st.session_state['course_map'] = course_map
+    print('application initialized!')
 
 
 def subscribe_email(email):
@@ -33,7 +38,12 @@ def get_watch_list(user_id):
 
 def show_course_info(course):
 
-    st.subheader(course['course_name'])
+    course_id = course['course_id'].split('.')[0]
+    if course_id in st.session_state['course_map']:
+        st.subheader(st.session_state['course_map'][course_id])
+        st.caption(course['course_name'])
+    else:
+        st.subheader(course['course_name'])
 
     sections = get_sections(course['subject_id'], course['course_id'])
 

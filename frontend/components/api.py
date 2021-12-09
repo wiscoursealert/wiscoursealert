@@ -20,3 +20,12 @@ def get_sections(subject_id, course_id):
         headers={'Content-Type': 'application/json'}
     )
     return json.loads(response.text)
+
+
+def get_course_search(queryString):
+    response = requests.post(
+        api_endpoint + 'lister/search',
+        data=json.dumps({"queryString": queryString}),
+        headers={'Content-Type': 'application/json'}
+    )
+    return json.loads(response.text)
