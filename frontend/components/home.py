@@ -3,12 +3,23 @@ import streamlit as st
 from .utils import valid_user_id, get_watch_list, show_course_info
 
 
+def catalog_name_mapping(x):
+    if x == None:
+        return 'Select course'
+    return st.session_state['course_map'][x]['catalog_name']
+
+
+def course_name_mapping(x):
+    return st.session_state['course_map'][x]['course_name']
+
+
 def edit_course():
-    print('hello')
-
-
-def course_id_mapping(x):
-    return st.session_state['course_map'][x]
+    st.subheader('Edit your watch list')
+    course_id_list = list(st.session_state['course_map'].keys())
+    course_id = st.selectbox(
+        'Course search',
+        options=[None] + course_id_list,
+        format_func=catalog_name_mapping)
 
 
 def app():
@@ -38,7 +49,7 @@ def app():
         watch_list = get_watch_list(st.session_state['user_id'])
         course_list = [course['course_id'] for course in watch_list]
         selected_courses = st.multiselect(
-            'Your watching list', course_list, default=st.session_state['selected_courses'], format_func=course_id_mapping)
+            'Your watching list', course_list, default=st.session_state['selected_courses'], format_func=course_name_mapping)
         if selected_courses != st.session_state['selected_courses']:
             st.session_state['selected_courses'] = selected_courses
             st.experimental_rerun()

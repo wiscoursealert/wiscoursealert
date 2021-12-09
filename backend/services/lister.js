@@ -31,6 +31,7 @@ lister.getSearchResults = async (queryString) => {
       return {
         course_id: entry.courseId,
         course_name: entry.courseDesignation,
+        course_full_name: entry.title,
         subject_id: entry.subject.subjectCode,
       };
     });

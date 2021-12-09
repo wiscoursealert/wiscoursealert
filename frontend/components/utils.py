@@ -1,5 +1,7 @@
 import streamlit as st
 from .api import get_course_search, get_user, get_sections
+import json
+from pprint import pprint
 
 
 def initialize():
@@ -8,11 +10,8 @@ def initialize():
     st.session_state['initialized'] = True
     st.session_state['user_id'] = None
     st.session_state['selected_courses'] = None
-    st.session_state['all_courses'] = get_course_search('*')
-    course_map = {}
-    for course in st.session_state['all_courses']:
-        course_map[course['course_id']] = course['course_name']
-    st.session_state['course_map'] = course_map
+    st.session_state['course_map'] = json.load(
+        open('data/course_map_fall21.json', 'r'))
     print('application initialized!')
 
 
