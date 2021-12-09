@@ -4,7 +4,6 @@ const usersController = {};
 
 usersController.getUser = async (req, res) => {
   try {
-    console.log(req.body);
     const user = await register.getUser(req.body.user_id);
     res.json(user);
   } catch (err) {
