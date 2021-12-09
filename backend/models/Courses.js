@@ -61,9 +61,9 @@ courseModel.addCourse = async (adding_course) => {
 };
 
 courseModel.updateCourse = async (updated_course) => {
-  const updatedCourse = await Courses.findByIdAndUpdate(
-    updated_course._id,
-    updated_course,
+  const updatedUser = await User.findOneAndUpdate(
+    { user_id: updated_user.user_id },
+    updated_user,
     { new: true }
   );
   return updatedCourse;
