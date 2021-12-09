@@ -62,8 +62,8 @@ userModel.addUser = async ({ user_id, email }) => {
 };
 
 userModel.updateUser = async (updated_user) => {
-  const updatedUser = await User.findByIdAndUpdate(
-    updated_user._id,
+  const updatedUser = await User.findOneAndUpdate(
+    { user_id: updated_user.user_id },
     updated_user,
     { new: true }
   );
