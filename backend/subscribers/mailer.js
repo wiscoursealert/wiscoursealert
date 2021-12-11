@@ -1,12 +1,12 @@
 const config = require("../config");
 
-const mailer = require("../services/mailer");
+const Mailer = require("../services/Mailer");
 
 const Queue = require("bee-queue");
 
 // task queue
 const mailQueue = new Queue("mailer", config.queueOptions);
-const enqueue = {
+const Enqueue = {
   notify: (mailData) => {
     let jobData = {
       param: mailData,
@@ -25,8 +25,8 @@ const enqueue = {
 };
 
 mailQueue.process(config.workersMailer, async (job) => {
-  const res = await mailer[job.data.work](job.data.param);
+  const res = await Mailer[job.data.work](job.data.param);
   return res;
 });
 
-module.exports = enqueue;
+module.exports = Enqueue;

@@ -1,10 +1,10 @@
-const lister = require("../services/lister");
+const ListerService = require("../services/Lister");
 
-const listerController = {};
+const Lister = {};
 
-listerController.getSearchResults = async (req, res) => {
+Lister.getSearchResults = async (req, res) => {
   try {
-    const temp = await lister.getSearchResults(req.body.queryString);
+    const temp = await ListerService.getSearchResults(req.body.queryString);
     res.send(temp);
   } catch (err) {
     console.log("listerControl getSearchResults err: " + err);
@@ -12,9 +12,9 @@ listerController.getSearchResults = async (req, res) => {
   }
 };
 
-listerController.getSections = async (req, res) => {
+Lister.getSections = async (req, res) => {
   try {
-    const temp = await lister.getSections(
+    const temp = await ListerService.getSections(
       req.body.subject_id,
       req.body.course_id
     );
@@ -25,4 +25,4 @@ listerController.getSections = async (req, res) => {
   }
 };
 
-module.exports = listerController;
+module.exports = Lister;

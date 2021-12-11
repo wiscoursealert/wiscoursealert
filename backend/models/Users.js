@@ -42,17 +42,17 @@ const UserSchema = mongoose.Schema({
 module.exports = mongoose.model("Users", UserSchema);
 
 const User = mongoose.model("Users");
-const userModel = {};
+const UsersModel = {};
 
-userModel.findUserID = (user_id) => {
+UsersModel.findUserID = (user_id) => {
   return User.find({ user_id: user_id });
 };
 
-userModel.findEmail = (email) => {
+UsersModel.findEmail = (email) => {
   return User.find({ email: email });
 };
 
-userModel.addUser = async ({ user_id, email }) => {
+UsersModel.addUser = async ({ user_id, email }) => {
   const user = new User({
     user_id: user_id,
     email: email,
@@ -61,9 +61,9 @@ userModel.addUser = async ({ user_id, email }) => {
   return savedUser;
 };
 
-userModel.updateUser = async (updated_user) => {
+UsersModel.updateUser = async (updated_user) => {
   const updatedUser = await User.findOneAndUpdate({user_id: updated_user.user_id}, updated_user, {new: true});
   return updatedUser;
 };
 
-module.exports = userModel;
+module.exports = UsersModel;

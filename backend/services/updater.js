@@ -1,7 +1,7 @@
 const { setIntervalAsync } = require("set-interval-async/fixed");
 const axios = require("axios");
-const courseModel = require("../models/Courses");
-const responder = require("../subscribers/responder");
+const CoursesModel = require("../models/Courses");
+const Responder = require("../subscribers/Responder");
 
 // termCode = 1222 is for fall 2021
 const getCourseDetail = async (subject_id, course_id, termCode = "1222") => {
@@ -14,14 +14,14 @@ const getCourseDetail = async (subject_id, course_id, termCode = "1222") => {
 const timer = setIntervalAsync(async () => {
   console.log("Hello :D");
 
-  const allCourse = await courseModel.getAll();
+  const allCourse = await CoursesModel.getAll();
 
   for (let i = 0; i < allCourse.length; i++) {
     const course = allCourse[i];
     // get course detail (containing sections)
     const results = await getCourseDetail(course.subject_id, course.course_id);
     // responder call
-    responder(results);
+    Responder(results);
   }
 }, 10000);
 

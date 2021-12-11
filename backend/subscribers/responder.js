@@ -1,17 +1,17 @@
 const config = require("../config");
 
-const responder = require("../services/responder");
+const Responder = require("../services/Responder");
 
 const Queue = require("bee-queue");
 
 // task queue
 const respondQueue = new Queue("responder", config.queueOptions);
-const enqueue = (results) => {
+const Enqueue = (results) => {
   return respondQueue.createJob(results).save();
 };
 respondQueue.process(config.workersResponder, async (job) => {
-  const res = await responder(job.data);
+  const res = await Responder(job.data);
   return res;
 });
 
-module.exports = enqueue;
+module.exports = Enqueue;

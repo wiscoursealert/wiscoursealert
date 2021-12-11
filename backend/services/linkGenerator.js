@@ -1,6 +1,6 @@
-linkGenerator = (user_id) => {
+generateLink = (user_id) => {
   let editUrl = "www.wiscoursealert.com" + "/?token=" + user_id;
   return editUrl;
 };
 
-module.exports = linkGenerator;
+module.exports = generateLink;

@@ -1,28 +1,28 @@
-const register = require("../services/register");
+const RegistrarService = require("../services/Registrar");
 
-const usersController = {};
+const Users = {};
 
-usersController.getUser = async (req, res) => {
+Users.getUser = async (req, res) => {
   try {
-    const user = await register.getUser(req.body.user_id);
+    const user = await RegistrarService.getUser(req.body.user_id);
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
-usersController.addUser = async (req, res) => {
+Users.addUser = async (req, res) => {
   try {
-    const newUser = await register.addUser(req.body.email);
+    const newUser = await RegistrarService.addUser(req.body.email);
     res.json(newUser);
   } catch (err) {
     res.status(500).json({ message: err });
   }
 };
 
-usersController.updateUser = async (req, res) => {
+Users.updateUser = async (req, res) => {
   try {
-    const updatedUser = await register.updateUser({
+    const updatedUser = await RegistrarService.updateUser({
       user_id: req.body.user_id,
       newUser: req.body,
     });
@@ -32,4 +32,4 @@ usersController.updateUser = async (req, res) => {
   }
 };
 
-module.exports = usersController;
+module.exports = Users;

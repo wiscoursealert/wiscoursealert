@@ -1,14 +1,14 @@
-const courseModel = require("../models/Courses");
+const CoursesModel = require("../models/Courses");
 
-const subscriber = {};
+const Subscriber = {};
 
 findCourse = async (course_id, course_name, subject_id) => {
-  const courses = await courseModel.getCourse(course_id);
+  const courses = await CoursesModel.getCourse(course_id);
 
   var course;
   // if course with course_id doesn't exist, add it
   if (courses.length === 0) {
-    course = await courseModel.addCourse({
+    course = await CoursesModel.addCourse({
       course_id: course_id,
       course_name: course_name,
       subject_id: subject_id,
@@ -28,7 +28,7 @@ findSection = async (course_id, course_name, subject_id, section_id) => {
   if (sectionIndex === -1) {
     course.sections.push({ section_id: section_id });
   }
-  const updatedCourse = await courseModel.updateCourse(course);
+  const updatedCourse = await CoursesModel.updateCourse(course);
   return updatedCourse;
 };
 
@@ -52,12 +52,12 @@ subscribe = async (course_id, course_name, subject_id, section_id, email) => {
     return section;
   });
 
-  const updatedCourse = await courseModel.updateCourse(course);
+  const updatedCourse = await CoursesModel.updateCourse(course);
   return updatedCourse;
 };
 
 unsubscribe = async (course_id, course_name, subject_id, section_id, email) => {
-  const course = (await courseModel.getCourse(course_id))[0];
+  const course = (await CoursesModel.getCourse(course_id))[0];
   // remove email from this section
   course.sections = course.sections.map((section) => {
     if (section.section_id === section_id) {
@@ -73,15 +73,15 @@ unsubscribe = async (course_id, course_name, subject_id, section_id, email) => {
     return section.subscribers.length !== 0;
   });
 
-  const updatedCourse = await courseModel.updateCourse(course);
+  const updatedCourse = await CoursesModel.updateCourse(course);
 
   // remove course with no sections
   if (updatedCourse.sections.length === 0) {
-    courseModel.removeCourse(updatedCourse);
+    CoursesModel.removeCourse(updatedCourse);
   }
 };
 
-subscriber.updateUser = async (user, type) => {
+Subscriber.updateUser = async (user, type) => {
   const email = user.email;
   const courses = user.subscribed;
   for (let i = 0; i < courses.length; i++) {
@@ -113,4 +113,4 @@ subscriber.updateUser = async (user, type) => {
   }
 };
 
-module.exports = subscriber;
+module.exports = Subscriber;

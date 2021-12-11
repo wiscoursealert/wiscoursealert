@@ -1,6 +1,6 @@
-const courseModel = require("../models/Courses");
-const userModel = require("../models/Users");
-const mailer = require("../subscribers/mailer");
+const CoursesModel = require("../models/Courses");
+const UsersModel = require("../models/Users");
+const Mailer = require("../subscribers/Mailer");
 
 // interface
 const run = async (results, test = false) => {
@@ -64,7 +64,7 @@ manageResults = async (results, test = false) => {
   }
 
   // check each section in the database
-  const course_data = (await courseModel.getCourse(course_id))[0]; // it returns list, even if it is singular in practice
+  const course_data = (await CoursesModel.getCourse(course_id))[0]; // it returns list, even if it is singular in practice
   const course_name = course_data.course_name;
 
   for (let i = 0; i < course_data.sections.length; i++) {
@@ -99,7 +99,7 @@ manageResults = async (results, test = false) => {
         // get user details
         const email = subscriber.email;
         const last_sent = subscriber.last_sent;
-        const users = await userModel.findEmail(email);
+        const users = await UsersModel.findEmail(email);
 
         if (users.length == 0) continue;
 
@@ -131,14 +131,14 @@ manageResults = async (results, test = false) => {
               prev_status: section_data.prev_status,
               new_status: section_data.status,
             };
-            mailer.notify(mailParams); // no need to await for anything
+            Mailer.notify(mailParams); // no need to await for anything
           }
         }
       }
     }
   }
   // update database
-  courseModel.updateCourse(course_data);
+  CoursesModel.updateCourse(course_data);
 
   // if test, return results for evaluation
   if (test) {

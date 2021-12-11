@@ -1,7 +1,7 @@
 const axios = require("axios");
-const lister = {};
+const Lister = {};
 
-lister.getSearchResults = async (queryString) => {
+Lister.getSearchResults = async (queryString) => {
   let searchResult = {};
   try {
     //posting
@@ -37,12 +37,12 @@ lister.getSearchResults = async (queryString) => {
     });
     return courses;
   } catch (err) {
-    console.log("lister err " + err);
+    console.log("Lister err " + err);
     res.status(500).json({ message: err });
   }
 };
 
-lister.getSections = async (subject_id, course_id) => {
+Lister.getSections = async (subject_id, course_id) => {
   let api_req = {};
   let termCode = "1222"; // fall2021
   let url =
@@ -87,4 +87,4 @@ lister.getSections = async (subject_id, course_id) => {
   return sections;
 };
 
-module.exports = lister;
+module.exports = Lister;

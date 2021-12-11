@@ -48,19 +48,19 @@ const CourseSchema = mongoose.Schema({
 module.exports = mongoose.model("Courses", CourseSchema);
 
 const Courses = mongoose.model("Courses");
-const courseModel = {};
+const CoursesModel = {};
 
-courseModel.getCourse = (course_id) => {
+CoursesModel.getCourse = (course_id) => {
   return Courses.find({ course_id: course_id });
 };
 
-courseModel.addCourse = async (adding_course) => {
+CoursesModel.addCourse = async (adding_course) => {
   const course = new Courses(adding_course);
   const savedCourse = await course.save();
   return savedCourse;
 };
 
-courseModel.updateCourse = async (updated_course) => {
+CoursesModel.updateCourse = async (updated_course) => {
   const updatedCourse = await Courses.findByIdAndUpdate(
     updated_course._id,
     updated_course,
@@ -69,12 +69,12 @@ courseModel.updateCourse = async (updated_course) => {
   return updatedCourse;
 };
 
-courseModel.removeCourse = async (removing_course) => {
+CoursesModel.removeCourse = async (removing_course) => {
   await Courses.deleteOne({ _id: removing_course._id });
 };
 
-courseModel.getAll = () => {
+CoursesModel.getAll = () => {
   return Courses.find({}); // async
 };
 
-module.exports = courseModel;
+module.exports = CoursesModel;

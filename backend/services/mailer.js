@@ -1,10 +1,10 @@
 const nodemailer = require("nodemailer");
-const linkGenerator = require("./linkGenerator");
+const LinkGenerator = require("./LinkGenerator");
 require("dotenv/config");
 
-mailer = {};
+Mailer = {};
 
-mailer.notify = async ({
+Mailer.notify = async ({
   user_id,
   user_email,
   course_name,
@@ -14,7 +14,7 @@ mailer.notify = async ({
   new_status,
 }) => {
   ////
-  subscription_link = linkGenerator(user_id);
+  subscription_link = LinkGenerator(user_id);
   /////
   console.log("sending email to:" + user_email);
 
@@ -91,6 +91,6 @@ generateHtml = (subscription_link) => {
   return "<a href=" + subscription_link + ">manage subscription</a>";
 };
 
-mailer.editSubscription = ({ user_email, subscription_link }) => {};
+Mailer.editSubscription = ({ user_email, subscription_link }) => {};
 
-module.exports = mailer;
+module.exports = Mailer;
