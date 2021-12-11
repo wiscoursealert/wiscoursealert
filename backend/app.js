@@ -13,6 +13,8 @@ app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(require("./routes"));
+app.get("/", (req, res) => {
+  res.status(200).send("Hello There!");
+});
 
-app.listen(process.env.PORT);
+app.use(require("./routes"));
