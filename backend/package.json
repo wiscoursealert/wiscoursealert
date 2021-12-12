@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon app.js",
     "testemail": "nodemon tests/email_api.js",
-    "test": "jest --runInBand ./test"
+    "testall": "jest --runInBand ./test",
+    "test": "jest --"
   },
   "author": "",
   "license": "ISC",
