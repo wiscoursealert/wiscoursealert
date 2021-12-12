@@ -12,3 +12,4 @@ generateLink = (user_id) => {
 };
 
 module.exports = generateLink;
+ 
