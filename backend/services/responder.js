@@ -1,11 +1,10 @@
 const CoursesModel = require("../models/Courses");
 const UsersModel = require("../models/Users");
-const Mailer = require("../subscribers/Mailer");
 
 // interface
-const run = async (results, test = false) => {
+const run = async (results, Mailer=require("../subscribers/Mailer")) => {
   try {
-    const res = await manageResults(results, test);
+    const res = await manageResults(results, Mailer);
     return res;
   } catch (err) {
     console.log("Responder error:");
@@ -13,14 +12,10 @@ const run = async (results, test = false) => {
   }
 };
 
-// test=true: return list of emails instead of submitting them
-manageResults = async (results, test = false) => {
+manageResults = async (results, Mailer) => {
   if (results.length == 0) return;
 
   const course_id = results[0].courseId;
-
-  // return emails if testing
-  let sents = [];
 
   // check each section in the result
   let secs_dict = {};
@@ -112,38 +107,25 @@ manageResults = async (results, test = false) => {
         if ((current_time - last_sent) / (1000 * 60) >= delay) {
           subscriber.last_sent = current_time; // set last_sent to now
 
-          // if test --> just test this module, skip mailing
-          if (test) {
-            sents.push({
-              email: email,
-              section_id: sec_id,
-            });
-          }
-          // otherwise, mail this person
-          else {
-            const mailParams = {
-              user_id: user_id,
-              user_email: email,
-              course_name: course_name,
-              lecture_name: section.lec_num,
-              discussion_name: section.dis_num,
-              lab_name: section.lab_num,
-              prev_status: section_data.prev_status,
-              new_status: section_data.status,
-            };
-            Mailer.notify(mailParams); // no need to await for anything
-          }
+          // mail this person
+          const mailParams = {
+            user_id: user_id,
+            user_email: email,
+            course_name: course_name,
+            lecture_name: section.lec_num,
+            discussion_name: section.dis_num,
+            section_id: sec_id,
+            lab_name: section.lab_num,
+            prev_status: section_data.prev_status,
+            new_status: section_data.status,
+          };
+          Mailer.notify(mailParams); // no need to await for anything
         }
       }
     }
   }
   // update database
   CoursesModel.updateCourse(course_data);
-
-  // if test, return results for evaluation
-  if (test) {
-    return sents;
-  }
 };
 
 module.exports = run;
