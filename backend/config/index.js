@@ -1,17 +1,14 @@
 //// Load config
 require('dotenv/config')
 
-const queueOptions = {
-  removeOnSuccess: true,
-  redis: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      password: process.env.REDIS_PASS,
-  },
+const redis = {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASS,
 }
 
-exports.queueOptions = queueOptions
+exports.redis = redis
 
-exports.workersResponder = 4
-exports.workersMailer = 4
-exports.workersRegister = 4;
+exports.workersResponder = 1;
+exports.workersMailer = 1;
+exports.workersRegister = 1;

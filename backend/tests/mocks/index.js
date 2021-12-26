@@ -3,3 +3,4 @@
 require("./mongoose")
 require("./redis")
 require("./Mailer")
+require("./Responder")

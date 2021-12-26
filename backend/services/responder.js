@@ -1,10 +1,13 @@
 const CoursesModel = require("../models/Courses");
 const UsersModel = require("../models/Users");
 
-const defaultMailer = () => require("../subscribers/Mailer")
+const defaultMailer = require("../subscribers/Mailer")
 
 // interface
-const run = async (results, Mailer=defaultMailer()) => {
+const run = async (results, Mailer=null) => {
+  if(Mailer == null){
+    Mailer = defaultMailer
+  }
   try {
     const res = await manageResults(results, Mailer);
     return res;
