@@ -22,9 +22,11 @@ describe("Testing Service Mailer", async () => {
   });
 
   test("Send portal email correctly", async () => {
-    const user_id = "2b15adb2-f644-4cf1-afb4-a670cac7461d";
-    const user_email = "hello@world.com";
-    await Mailer.portal(user_email, user_id);
+    const mailData = {
+      user_id: "2b15adb2-f644-4cf1-afb4-a670cac7461d", 
+      user_email: "hello@world.com"
+    }
+    await Mailer.portal(mailData);
 
     expect(nodemailerMock.mock.getSentMail().length).toBe(1);
     expect(nodemailerMock.mock.getSentMail()[0].subject).toBe("Your wiscoursealert Subscription Management Portal");

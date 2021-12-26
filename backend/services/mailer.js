@@ -60,7 +60,9 @@ generateNotifierBodyHtml = (subscription_link) => {
 };
 
 // TODO: link to this somewhere
-Mailer.portal = (user_email, user_id) => {
+Mailer.portal = (mailData) => {
+  let {user_email, user_id} = mailData;     // must be in this "big object" form to support subscriber
+
   // setup email contents
   let mailContents = {
     from: config.notifierMail.sender,

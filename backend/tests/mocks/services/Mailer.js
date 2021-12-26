@@ -8,7 +8,7 @@ const MockMailer = {
     notifyList.push(mailData);
     return Promise.resolve();
   },
-  editSubscription: (mailData) => {
+  portal: (mailData) => {
     editList.push(mailData);
     return Promise.resolve();
   },
