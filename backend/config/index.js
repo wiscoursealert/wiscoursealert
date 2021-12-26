@@ -6,9 +6,13 @@ const redis = {
     port: process.env.REDIS_PORT,
     password: process.env.REDIS_PASS,
 }
-
-exports.redis = redis
+exports.redis = redis;
 
 exports.workersResponder = 1;
 exports.workersMailer = 1;
 exports.workersRegister = 1;
+
+const notifierMail = {
+    sender: "no_reply." + process.env.MAIL_USERNAME,
+}
+exports.notifierMail = notifierMail;
