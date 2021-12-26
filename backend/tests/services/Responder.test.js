@@ -1,6 +1,6 @@
 const Mongoose = require('../mocks/mongoose')               // mock
 
-const Mailer = require('../mocks/Mailer')
+const Mailer = require('../mocks/services/Mailer')
 const Responder = require('../../services/Responder')
 const CoursesModel = require('../../models/Courses')
 const UsersModel = require('../../models/Users')

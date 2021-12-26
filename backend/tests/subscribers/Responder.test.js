@@ -1,5 +1,5 @@
 const Mongoose = require('../mocks/mongoose')
-const MockResponderService = require('../mocks/Responder');
+const MockResponderService = require('../mocks/services/Responder');
 // mock redis is broken, but real redis works fine
 const Responder = require('../../subscribers/responder')
 const CoursesModel = require('../../models/Courses')

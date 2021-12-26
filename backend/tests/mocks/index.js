@@ -2,5 +2,5 @@
 
 require("./mongoose")
 require("./redis")
-require("./Mailer")
-require("./Responder")
+require("./services/Mailer")
+require("./services/Responder")
