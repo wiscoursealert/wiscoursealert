@@ -6,7 +6,7 @@ const nodemailer = require("nodemailer");
 
 // create reusable transporter object using developers.google Gmailv1 api
 // follow https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
-const transporter = await nodemailer.createTransport({
+const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     type: "OAuth2",
@@ -21,7 +21,7 @@ const transporter = await nodemailer.createTransport({
 Mailer = {};
 Mailer.notify = async (mailData) => {
   // receive parameters
-  user_id, user_email, course_name, lecture_name, lab_name, discussion_name, prev_status, new_status = mailData;
+  let {user_id, user_email, course_name, lecture_name, lab_name, discussion_name, prev_status, new_status} = mailData;
 
   // setup email contents
   let mailContents = {
@@ -33,9 +33,10 @@ Mailer.notify = async (mailData) => {
 
   return transporter.sendMail(mailContents, function (err, data){
     if(err){
-      console.err("Mailer.notify: failed to send email with error: " + err);
+      console.error("Mailer.notify: failed to send email with error: " + err);
       return false;
     }
+    return true;
   })
 };
 
@@ -59,7 +60,7 @@ generateNotifierBodyHtml = (subscription_link) => {
 };
 
 // TODO: link to this somewhere
-Mailer.portal = (user_email) => {
+Mailer.portal = (user_email, user_id) => {
   // setup email contents
   let mailContents = {
     from: config.notifierMail.sender,
@@ -70,9 +71,10 @@ Mailer.portal = (user_email) => {
 
   return transporter.sendMail(mailContents, function (err, data){
     if(err){
-      console.err("Mailer.portal: failed to send email with error: " + err);
+      console.error("Mailer.portal: failed to send email with error: " + err);
       return false;
     }
+    return true;
   })
 };
 

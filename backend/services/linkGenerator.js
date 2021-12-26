@@ -5,7 +5,7 @@ validateUUID = (user_id) => {
 
 generateLink = (user_id) => {
   if(!validateUUID(user_id)){
-    throw new Error("User ID is not a valid UUID.");
+    throw new Error("User ID " + user_id + " is not a valid UUID.");
   }
   let editUrl = process.env.URL_MAIN + "/?token=" + user_id;
   return editUrl;
