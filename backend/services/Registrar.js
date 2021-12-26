@@ -22,7 +22,7 @@ Registrar.addUser = async (email) => {
     });
     return newUser;
   } else {
-    return Error("Error: this email already exists");
+    return users[0];
   }
 };
 
