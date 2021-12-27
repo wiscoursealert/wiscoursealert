@@ -16,3 +16,6 @@ const notifierMail = {
     sender: "no_reply." + process.env.MAIL_USERNAME,
 }
 exports.notifierMail = notifierMail;
+
+exports.apiUrl = "https://public.enroll.wisc.edu/api";
+exports.termCode = "1222";            // Fall 2021
