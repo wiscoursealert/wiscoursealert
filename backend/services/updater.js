@@ -20,8 +20,9 @@ const timer = setIntervalAsync(async () => {
     const course = allCourse[i];
     // get course detail (containing sections)
     const results = await getCourseDetail(course.subject_id, course.course_id);
+    // TODO: combine results
     // responder call
-    Responder(results);
+    await Responder(results);
   }
 }, 10000);
 

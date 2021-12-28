@@ -1,7 +1,16 @@
 const resultsList = [];
+let running = false;
+const delay = 1000;
 
-const service = (results, Mailer=null) => {
-  resultsList.push(results);
+wait = async (ms) => {
+  await new Promise(resolve => setTimeout(resolve, ms));
 }
 
-module.exports = {service: service, resultsList: resultsList};
+const service = async (results, Mailer=null) => {
+  running = true;
+  await wait(delay);
+  resultsList.push(results);
+  running = false;
+}
+
+module.exports = {service: service, resultsList: resultsList, delay: delay, running: running};
