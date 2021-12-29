@@ -17,6 +17,7 @@ const notifierMail = {
 const apiUrl = "https://public.enroll.wisc.edu/api";
 const termCode = 1222;              // Fall 2021
 
+const fetchCooldown = 10000;        // ms   
 
 
 exports.redis = redis;
@@ -24,5 +25,6 @@ exports.workersResponder = workersResponder;
 exports.workersMailer = workersMailer;
 exports.workersRegister = workersRegister;
 exports.notifierMail = notifierMail;
-exports.apiUrl = apiUrl
-exports.termCode = termCode;            
+exports.apiUrl = apiUrl;
+exports.termCode = termCode;
+exports.fetchCooldown = fetchCooldown;
