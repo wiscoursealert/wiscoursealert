@@ -19,7 +19,7 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "mongoose": "^5.12.8",
-    "nodemailer": "^6.6.0",
+    "nodemailer": "^6.6.1",
     "nodemon": "^2.0.7",
     "package.json": "^2.0.1",
     "set-interval-async": "^2.0.3",
