@@ -1,38 +1,35 @@
-const register = require('../services/register');
+const RegistrarService = require("../services/Registrar");
 
-const usersController = {};
+const Users = {};
 
-usersController.getUser = async (req, res) => {
+Users.getUser = async (req, res) => {
   try {
-    const user = await register.getUser(req.body.user_id);
+    const user = await RegistrarService.getUser(req.body.user_id);
     res.json(user);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ message: err });
   }
-}
+};
 
-usersController.addUser = async (req, res) => {
+Users.addUser = async (req, res) => {
   try {
-    const newUser = await register.addUser(req.body.email);
+    const newUser = await RegistrarService.addUser(req.body.email);
     res.json(newUser);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ message: err });
   }
-}
+};
 
-usersController.updateUser = async (req, res) => {
+Users.updateUser = async (req, res) => {
   try {
-    const updatedUser = await register.updateUser({ 
-      user_id: req.body.user_id, 
-      newUser: req.body
+    const updatedUser = await RegistrarService.updateUser({
+      user_id: req.body.user_id,
+      newUser: req.body,
     });
     res.json(updatedUser);
-  }
-  catch (err) {
+  } catch (err) {
     res.status(500).json({ message: err });
   }
-}
+};
 
-module.exports = usersController;
+module.exports = Users;

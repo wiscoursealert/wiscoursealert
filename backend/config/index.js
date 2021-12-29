@@ -1,17 +1,30 @@
 //// Load config
 require('dotenv/config')
 
-const queueOptions = {
-  removeOnSuccess: true,
-  redis: {
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      password: process.env.REDIS_PASS,
-  },
+const redis = {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASS,
+}
+const workersResponder = 1;
+const workersMailer = 1;
+const workersRegister = 1;
+
+const notifierMail = {
+    sender: "no_reply." + process.env.MAIL_USERNAME,
 }
 
-exports.queueOptions = queueOptions
+const apiUrl = "https://public.enroll.wisc.edu/api";
+const termCode = 1222;              // Fall 2021
 
-exports.workersResponder = 4
-exports.workersMailer = 4
-exports.workersRegister = 4;
+const fetchCooldown = 10000;        // ms   
+
+
+exports.redis = redis;
+exports.workersResponder = workersResponder;
+exports.workersMailer = workersMailer;
+exports.workersRegister = workersRegister;
+exports.notifierMail = notifierMail;
+exports.apiUrl = apiUrl;
+exports.termCode = termCode;
+exports.fetchCooldown = fetchCooldown;

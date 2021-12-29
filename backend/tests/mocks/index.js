@@ -2,3 +2,7 @@
 
 require("./mongoose")
 require("./redis")
+require("./nodemailer")
+
+require("./services/Mailer")
+require("./services/Responder")

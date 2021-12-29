@@ -1,18 +1,21 @@
 //// Load modules
-require('./loaders')
+require("./loaders");
 
 //// Load express
-const express = require('express'),
-      bodyParser = require('body-parser'),
-      cors = require('cors');
+const express = require("express"),
+  bodyParser = require("body-parser"),
+  cors = require("cors");
 
 //// Initialize app
 const app = express();
 
-app.use(express.json({ 'extended': false }));
+app.use(express.json({ extended: false }));
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(require('./routes'));
+app.get("/", (req, res) => {
+  res.status(200).send("Hello There!");
+});
 
-app.listen(process.env.PORT);
+app.use(require("./routes"));
+module.exports = app;

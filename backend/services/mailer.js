@@ -1,74 +1,83 @@
-const nodemailer = require('nodemailer');
-const linkGenerator = require('./linkGenerator');
-require('dotenv/config')
+const config = require("../config");
 
-mailer = {}
+const LinkGenerator = require("./LinkGenerator");
 
-mailer.notify = async ({user_id, user_email, course_name, lecture_name, discussion_name, prev_status, new_status}) => {
+const nodemailer = require("nodemailer");
 
-  ////
-  subscription_link = linkGenerator(user_id);
-  /////
-  console.log("sending email to:"+user_email)
+// create reusable transporter object using developers.google Gmailv1 api
+// follow https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.MAIL_USERNAME,
+    pass: process.env.MAIL_PASSWORD,
+    clientId: process.env.OAUTH_CLIENTID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+  },
+});
 
-  // create reusable transporter object using developers.google Gmailv1 api
-  // follow https://www.freecodecamp.org/news/use-nodemailer-to-send-emails-from-your-node-js-server/
-  let transporter = await nodemailer.createTransport({
-    service: 'gmail',
-      auth: {
-        type: 'OAuth2',
-        user: process.env.MAIL_USERNAME,
-        pass: process.env.MAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENTID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN
-      }
-  });
-  // set mail option
-  let mailOptions = {
-    from: generateSender(),
-    to: generateRecipient(user_email),
-    subject: generateSubject(course_name, lecture_name, discussion_name),
-    html: generateHtml(subscription_link)
+Mailer = {};
+Mailer.notify = async (mailData) => {
+  // receive parameters
+  let {user_id, user_email, course_name, lecture_name, lab_name, discussion_name, prev_status, new_status} = mailData;
+
+  // setup email contents
+  let mailContents = {
+    from: config.notifierMail.sender,
+    to: user_email,
+    subject: generateNotifierSubject(course_name, lecture_name, discussion_name, lab_name, prev_status, new_status),
+    html: generateNotifierBodyHtml(LinkGenerator(user_id)),
   };
 
-  let result = true
-  //need to fix await
-  //now return before finishing sendMail
-  // send mail with defined transport object
-  await transporter.sendMail(mailOptions, function(err, data) {
-    if (err) {
-        result = false
-        console.log("Error " + err);
-    } else {
-        console.log("Email sent successfully");
+  return transporter.sendMail(mailContents, function (err, data){
+    if(err){
+      console.error("Mailer.notify: failed to send email with error: " + err);
+      return false;
     }
-  });
-  return result
-}
+    return true;
+  })
+};
 
-generateSender = () =>{
-    return "no_reply."+process.env.MAIL_USERNAME;
-}
+generateNotifierSubject = (course_name, lecture_name, discussion_name, lab_name, prev_status, new_status) => {
+  let subject = course_name;
+  if(lecture_name != null){
+    subject += ", LEC " + lecture_name;
+  }
+  if(discussion_name != null){
+    subject += ", DIS " + discussion_name;
+  }
+  if(lab_name != null){
+    subject += ", LAB " + lab_name;
+  }
+  subject += " has changed its status from " + prev_status + " to " + new_status;
+  return subject;
+};
 
-generateRecipient = (user_email) =>{
-    return user_email;
-}
+generateNotifierBodyHtml = (subscription_link) => {
+  return "<a href=" + subscription_link + ">Please click this link to manage your subscriptions<br><br><br>Wiscoursealert Automated Mailing System</a>";
+};
 
-generateSubject = (course_name, lecture_name, discussion_name) =>{
-    return course_name+" is open for enrollment"
-}
+// TODO: link to this somewhere
+Mailer.portal = (mailData) => {
+  let {user_email, user_id} = mailData;     // must be in this "big object" form to support subscriber
 
-generateText = (course_name, lecture_name, discussion_name, prev_status, new_status) =>{
-    return course_name+", lecture: "+lecture_name+", discussion: "+discussion_name+ " just changed from "+prev_status+" to "+new_status+" and is now open for enrollment"
-}
+  // setup email contents
+  let mailContents = {
+    from: config.notifierMail.sender,
+    to: user_email,
+    subject: "Your wiscoursealert Subscription Management Portal",
+    html: generateNotifierBodyHtml(LinkGenerator(user_id)),
+  };
 
-generateHtml = (subscription_link) =>{
-    return '<a href='+subscription_link+'>manage subscription</a>'
-}
+  return transporter.sendMail(mailContents, function (err, data){
+    if(err){
+      console.error("Mailer.portal: failed to send email with error: " + err);
+      return false;
+    }
+    return true;
+  })
+};
 
-mailer.editSubscription = ({user_email, subscription_link}) =>{
-
-}
-
-module.exports = mailer;
+module.exports = Mailer;
