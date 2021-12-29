@@ -13,17 +13,17 @@ const getCourseDetail = async (subject_id, course_id, termCode = "1222") => {
 // repeat every 10 seconds
 const timer = setIntervalAsync(async () => {
   console.log("Hello :D");
-
+  const allResults = [];
   const allCourse = await CoursesModel.getAll();
 
   for (let i = 0; i < allCourse.length; i++) {
     const course = allCourse[i];
     // get course detail (containing sections)
-    const results = await getCourseDetail(course.subject_id, course.course_id);
-    // TODO: combine results
+    allResults.push(await getCourseDetail(course.subject_id, course.course_id));
     // responder call
-    await Responder(results);
+    
   }
+  await Responder(allResults);
 }, 10000);
 
 module.exports = timer;
