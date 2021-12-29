@@ -15,17 +15,21 @@ const getCourseDetail = async (subject_id, course_id) => {
 
 // repeat every 10 seconds
 const timer = setIntervalAsync(async () => {
-  console.log("Fetching courses...");
-  const allResults = [];
-  const allCourse = await CoursesModel.getAll();
+  try{
+    console.log("Fetching courses...");
+    const allResults = [];
+    const allCourse = await CoursesModel.getAll();
 
-  for (let i = 0; i < allCourse.length; i++) {
-    const course = allCourse[i];
-    // get course detail (containing sections)
-    allResults.push(await getCourseDetail(course.subject_id, course.course_id));
+    for (let i = 0; i < allCourse.length; i++) {
+      const course = allCourse[i];
+      // get course detail (containing sections)
+      allResults.push(await getCourseDetail(course.subject_id, course.course_id));
+    }
+    // responder call
+    await Responder(allResults);
+  } catch (err) {
+    console.error(err);
   }
-  // responder call
-  await Responder(allResults);
 }, config.fetchCooldown);
 
 module.exports = timer;
