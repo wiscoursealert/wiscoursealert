@@ -27,7 +27,7 @@ afterEach(async () => {
 })
 
 describe("Testing Subscriber Responder", () => {
-  const mockApiResult = [
+  const mockApiResult = [[
     {
       "id": "CS101_S01",
       "courseId": "CS101",
@@ -80,8 +80,8 @@ describe("Testing Subscriber Responder", () => {
         }
       ]
     }
-  ]
-  const mockApiResult2 = [
+  ]]
+  const mockApiResult2 = [[
     {
       "id": "CS101_S99",
       "courseId": "CS101",
@@ -95,8 +95,8 @@ describe("Testing Subscriber Responder", () => {
         }
       ]
     }
-  ]
-  const mockApiResult3 = [
+  ]]
+  const mockApiResult3 = [[
     {
       "id": "CS101_S98",
       "courseId": "CS101",
@@ -110,7 +110,7 @@ describe("Testing Subscriber Responder", () => {
         }
       ]
     }
-  ]
+  ]]
   test("Successfully enqueue a single task and forward to the service", async () => {
     await Responder(mockApiResult, MockResponderService.service);
     await wait(pauseForProcess + serviceDelay);

@@ -91,7 +91,7 @@ afterEach(async () => await Mongoose.clearDatabase());
 afterAll(async () => await Mongoose.closeDatabase());
 
 describe("Testing Service Responder", () => {
-  const mockApiResult = [
+  const mockApiResult = [[
     {
       "id": "CS101_S01",
       "courseId": "CS101",
@@ -144,7 +144,7 @@ describe("Testing Service Responder", () => {
         }
       ]
     }
-  ]
+  ]]
   const expected = [{
     email: "guy2-2@mail.com",
     section_id: "CS101_S02"
@@ -156,6 +156,7 @@ describe("Testing Service Responder", () => {
 
   test("Responder responds correctly", async () => {
     await Responder(mockApiResult, Mailer);
+    await wait(1000);
     let mails = Mailer.notifyList;
     mails = mails.map((mailData) => {
       let x = {

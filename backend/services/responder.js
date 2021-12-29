@@ -9,15 +9,18 @@ const run = async (results, Mailer=null) => {
     Mailer = defaultMailer
   }
   try {
-    const res = await manageResults(results, Mailer);
-    return res;
+    await processCourses(results, Mailer);
   } catch (err) {
     console.log("Responder error:");
     console.error(err);
   }
 };
 
-manageResults = async (results, Mailer) => {
+processCourses = async (results, Mailer) => {
+  results.map(course => processCourse(course, Mailer));
+}
+
+processCourse = async (results, Mailer) => {
   if (results.length == 0) return;
 
   const course_id = results[0].courseId;
