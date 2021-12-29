@@ -8,12 +8,7 @@ const run = async (results, Mailer=null) => {
   if(Mailer == null){
     Mailer = defaultMailer
   }
-  try {
-    await processCourses(results, Mailer);
-  } catch (err) {
-    console.log("Responder error:");
-    console.error(err);
-  }
+  await processCourses(results, Mailer);
 };
 
 processCourses = async (results, Mailer) => {

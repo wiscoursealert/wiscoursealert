@@ -33,8 +33,7 @@ Mailer.notify = async (mailData) => {
 
   return transporter.sendMail(mailContents, function (err, data){
     if(err){
-      console.error("Mailer.notify: failed to send email with error: " + err);
-      return false;
+      throw err;
     }
     return true;
   })
@@ -73,10 +72,8 @@ Mailer.portal = (mailData) => {
 
   return transporter.sendMail(mailContents, function (err, data){
     if(err){
-      console.error("Mailer.portal: failed to send email with error: " + err);
-      return false;
+      throw err;
     }
-    return true;
   })
 };
 

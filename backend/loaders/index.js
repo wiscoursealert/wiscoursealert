@@ -24,3 +24,6 @@ require("../services/Updater.js");
 //// Load subscribers
 require("../subscribers/Mailer.js");
 require("../subscribers/Responder.js");
+
+//// Load controllers
+require("../controllers/Updater.js");
