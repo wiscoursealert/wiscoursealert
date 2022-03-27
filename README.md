@@ -8,16 +8,15 @@
 PORT = 3000
 MONGODB_URI =
 REDIS_HOST =
-REDIS_PORT = 12224
+REDIS_PORT =
 REDIS_PASS =
-```
 
-2. Set up conda environment for streamlit app
-
-```shell
-conda create -n wiscoursealert
-conda activate wiscoursealert
-pip install streamlit watchdog
+MAIL_USERNAME =
+MAIL_PASSWORD =
+OAUTH_CLIENTID =
+OAUTH_CLIENT_SECRET =
+OAUTH_REFRESH_TOKEN =
+URL_MAIN =
 ```
 
 ## Run
@@ -26,12 +25,9 @@ pip install streamlit watchdog
 
 ```shell
 cd backend
-node app.js
+npm start
 ```
 
 2. Run front-end
 
-```shell
-cd frontend
-streamlit run app.py
-```
+(NOT YET AVAILABLE)
