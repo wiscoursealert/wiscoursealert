@@ -55,10 +55,9 @@ generateNotifierSubject = (course_name, lecture_name, discussion_name, lab_name,
 };
 
 generateNotifierBodyHtml = (subscription_link) => {
-  return "<a href=" + subscription_link + ">Please click this link to manage your subscriptions<br><br><br>Wiscoursealert Automated Mailing System</a>";
+  return "<a href=" + subscription_link + ">Please click this link to manage your subscriptions</a><br><br><br>Wiscoursealert Automated Mailing System";
 };
 
-// TODO: link to this somewhere
 Mailer.portal = (mailData) => {
   let {user_email, user_id} = mailData;     // must be in this "big object" form to support subscriber
 
@@ -74,6 +73,7 @@ Mailer.portal = (mailData) => {
     if(err){
       throw err;
     }
+    return true;
   })
 };
 

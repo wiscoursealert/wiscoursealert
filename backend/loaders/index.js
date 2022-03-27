@@ -5,9 +5,8 @@ require("dotenv/config");
 const mongoose = require("mongoose");
 mongoose.connect(
   process.env.MONGODB_URI,
-  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
-  () => console.log("Connected to DB.")
-);
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
+).catch(error => console.error(error));
 
 //// Load models
 require("../models/Users.js");

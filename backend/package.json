@@ -2,9 +2,9 @@
   "name": "wisc-course-alert",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "nodemon server.js",
     "testemail": "nodemon tests/email_api.js",
     "testall": "jest --runInBand ./test",
     "test": "jest --"

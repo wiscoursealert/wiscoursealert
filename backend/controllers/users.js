@@ -4,7 +4,7 @@ const Users = {};
 
 Users.getUser = async (req, res) => {
   try {
-    const user = await RegistrarService.getUser(req.body.user_id);
+    const user = await RegistrarService.getUser(req.query.user_id);
     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err });
