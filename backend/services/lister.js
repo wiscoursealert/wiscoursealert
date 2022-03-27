@@ -33,7 +33,7 @@ Lister.getSearchResults = async (queryString) => {
 };
 
 Lister.getSections = async (subject_id, course_id) => {
-  const url = config.apiUrl + "/search/v1/enrollmentPackages/" + config.termCode + "/" + subject_id + "/" + course_id + "/";
+  const url = config.apiUrl + "/search/v1/enrollmentPackages/" + config.termCode + "/" + subject_id + "/" + course_id
   const apiResult = await axios.get(url);
   /* format
     * [{   
