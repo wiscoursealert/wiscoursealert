@@ -58,7 +58,6 @@ generateNotifierBodyHtml = (subscription_link) => {
   return "<a href=" + subscription_link + ">Please click this link to manage your subscriptions<br><br><br>Wiscoursealert Automated Mailing System</a>";
 };
 
-// TODO: link to this somewhere
 Mailer.portal = (mailData) => {
   let {user_email, user_id} = mailData;     // must be in this "big object" form to support subscriber
 
@@ -74,6 +73,7 @@ Mailer.portal = (mailData) => {
     if(err){
       throw err;
     }
+    return true;
   })
 };
 
