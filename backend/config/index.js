@@ -15,7 +15,7 @@ const notifierMail = {
 }
 
 const apiUrl = "https://public.enroll.wisc.edu/api";
-const termCode = 1222;              // Fall 2021
+const termCode = 1232;              // Fall 2022
 
 const fetchCooldown = 10000;        // ms   
 
