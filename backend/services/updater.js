@@ -1,9 +1,8 @@
-const config = require("../config");
-
-const CoursesModel = require("../models/Courses");
-const Responder = require("../subscribers/Responder");
-
 const axios = require("axios");
+
+const config = require("../config");
+const coursesRepository = require("../repositories/courses");
+const responder = require("../subscribers/responder");
 
 const fetchCourse = async (subject_id, course_id) => {
   const url = `${config.apiUrl}/search/v1/enrollmentPackages/${config.termCode}/${subject_id}/${course_id}`;
@@ -11,10 +10,9 @@ const fetchCourse = async (subject_id, course_id) => {
   return results.data;
 };
 
-// repeat every 10 seconds
 const fetchAllAndForward = async () => {
   const allResults = [];
-  const allCourse = await CoursesModel.getAll();
+  const allCourse = await coursesRepository.all();
 
   for (let i = 0; i < allCourse.length; i++) {
     const course = allCourse[i];
@@ -22,7 +20,7 @@ const fetchAllAndForward = async () => {
     allResults.push(await fetchCourse(course.subject_id, course.course_id));
   }
   // responder call
-  await Responder(allResults);
+  await responder(allResults);
 };
 
 module.exports = fetchAllAndForward;

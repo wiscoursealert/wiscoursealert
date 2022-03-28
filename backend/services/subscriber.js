@@ -1,14 +1,12 @@
-const CoursesModel = require("../models/Courses");
+const coursesRepository = require("../repositories/courses");
 
-const Subscriber = {};
-
-findCourse = async (course_id, course_name, subject_id) => {
-  const courses = await CoursesModel.getCourse(course_id);
+const findCourse = async (course_id, course_name, subject_id) => {
+  const courses = await coursesRepository.find(course_id);
 
   var course;
   // if course with course_id doesn't exist, add it
   if (courses.length === 0) {
-    course = await CoursesModel.addCourse({
+    course = await coursesRepository.create({
       course_id: course_id,
       course_name: course_name,
       subject_id: subject_id,
@@ -19,7 +17,7 @@ findCourse = async (course_id, course_name, subject_id) => {
   return course;
 };
 
-findSection = async (course_id, course_name, subject_id, section_id) => {
+const findSection = async (course_id, course_name, subject_id, section_id) => {
   const course = await findCourse(course_id, course_name, subject_id);
   const sectionIndex = course.sections.findIndex((section) => {
     return section.section_id === section_id;
@@ -28,11 +26,11 @@ findSection = async (course_id, course_name, subject_id, section_id) => {
   if (sectionIndex === -1) {
     course.sections.push({ section_id: section_id });
   }
-  const updatedCourse = await CoursesModel.updateCourse(course);
+  const updatedCourse = await coursesRepository.update(course);
   return updatedCourse;
 };
 
-subscribe = async (course_id, course_name, subject_id, section_id, email) => {
+const subscribe = async (course_id, course_name, subject_id, section_id, email) => {
   const course = await findSection(
     course_id,
     course_name,
@@ -52,12 +50,12 @@ subscribe = async (course_id, course_name, subject_id, section_id, email) => {
     return section;
   });
 
-  const updatedCourse = await CoursesModel.updateCourse(course);
+  const updatedCourse = await coursesRepository.update(course);
   return updatedCourse;
 };
 
-unsubscribe = async (course_id, course_name, subject_id, section_id, email) => {
-  const course = (await CoursesModel.getCourse(course_id))[0];
+const unsubscribe = async (course_id, course_name, subject_id, section_id, email) => {
+  const course = (await coursesRepository.find(course_id))[0];
   // remove email from this section
   course.sections = course.sections.map((section) => {
     if (section.section_id === section_id) {
@@ -73,15 +71,15 @@ unsubscribe = async (course_id, course_name, subject_id, section_id, email) => {
     return section.subscribers.length !== 0;
   });
 
-  const updatedCourse = await CoursesModel.updateCourse(course);
+  const updatedCourse = await coursesRepository.update(course);
 
   // remove course with no sections
   if (updatedCourse.sections.length === 0) {
-    CoursesModel.removeCourse(updatedCourse);
+    coursesRepository.remove(updatedCourse);
   }
 };
 
-Subscriber.updateUser = async (user, type) => {
+const updateUser = async (user, type) => {
   const email = user.email;
   const courses = user.subscribed;
   for (let i = 0; i < courses.length; i++) {
@@ -113,4 +111,6 @@ Subscriber.updateUser = async (user, type) => {
   }
 };
 
-module.exports = Subscriber;
+module.exports = {
+  updateUser
+};

@@ -1,22 +1,21 @@
-const config = require("../config");
-
-const defaultMailer = require("../services/Mailer");
-let Mailer = defaultMailer;
-
 const Queue = require("bee-queue");
-const Redis = require("redis");
+const redis = require("redis");
+
+const config = require("../config");
+const defaultMailer = require("../services/mailer");
+let mailer = defaultMailer;                           // TODO: find a better pattern
 
 const setMailer = (mailer=null) => {
   if(mailer != null){
-    Mailer = mailer;
+    mailer = mailer;
   }
   else{
-    Mailer = defaultMailer;
+    mailer = defaultMailer;
   }
 }
 
-// redis
-const client = Redis.createClient(config.redis);
+// Redis
+const client = redis.createClient(config.redis);
 client.on('ready', () => {
   console.log('Redis is now ready');
 })
@@ -27,7 +26,10 @@ mailQueue.on('ready', () => {
   console.log('mailQueue is now ready');
 });
 mailQueue.on('error', (err) => {
-  console.log(`A mailQueue error happened: ${err.message}`);
+  console.err(`A mailQueue error happened: ${err.message}`);
+});
+mailQueue.on('failed', (job, err) => {
+  console.err(`Job ${job.id} failed with error ${err.message}`);
 });
 mailQueue.on('succeeded', (job, result) => {
   console.log(`Job ${job.id} succeeded with result: ${result}`);
@@ -56,9 +58,14 @@ const enqueue = {
   },
 };
 
-mailQueue.process(config.workersMailer, async (job) => {
-  const res = await Mailer[job.data.work](job.data.param);
-  return res;
+mailQueue.process(config.workersCount.mailer, async (job) => {
+  try{
+    await mailer[job.data.work](job.data.param);
+  } catch (err){
+    console.err(err);
+    return false;
+  }
+  return true;
 });
 
 module.exports = enqueue;

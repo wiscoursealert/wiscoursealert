@@ -2,11 +2,11 @@ const Mongoose = require('../mocks/mongoose')               // mock
 
 const Mailer = require('../mocks/services/Mailer')
 const Responder = require('../../services/Responder')
-const CoursesModel = require('../../models/Courses')
-const UsersModel = require('../../models/Users')
+const CoursesRepository = require('../../repositories/Courses')
+const UsersRepository = require('../../repositories/Users')
 
 insertMockDbData1 = async () => {
-  await CoursesModel.addCourse({
+  await CoursesRepository.create({
     course_id: "CS101",
     course_name: "Outro to Quantum Super Machine-Learned Cryptocurrency",
     subject_id: "COMPSCI007",
@@ -48,35 +48,35 @@ insertMockDbData1 = async () => {
     }]
   })
 
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U1-1",
     email: "guy1-1@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U1-2",
     email: "guy1-2@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U2-1",
     email: "guy2-1@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U2-2",
     email: "guy2-2@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U3-1",
     email: "guy3-1@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U3-2",
     email: "guy3-2@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U4-1",
     email: "guy4-1@mail.com"
   })
-  await UsersModel.addUser({
+  await UsersRepository.create({
     user_id: "U4-2",
     email: "guy4-2@mail.com"
   })
@@ -176,7 +176,7 @@ describe("Testing Service Responder", () => {
     await wait(1000);
     const expectedSet = new Set(expected.map(({email, section_id}) => email + ";" + section_id));
 
-    const courses = await CoursesModel.getAll();
+    const courses = await CoursesRepository.all();
     //console.log("approxSentTime  >>> " + approxSentTime)
     await Promise.all(courses.map(async ({sections}) => {
       sections.map(({section_id, subscribers}) => {

@@ -1,5 +1,5 @@
-const Responder = require('../../subscribers/Responder');
-const MockResponderService = require('../mocks/services/Responder');
+const Responder = require('../../subscribers/responder');
+const MockResponderService = require('../mocks/services/responder');
 // mock redis is broken, but real redis works fine
 
 wait = async (ms) => {

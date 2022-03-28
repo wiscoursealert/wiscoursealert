@@ -4,5 +4,5 @@ require("./mongoose")
 require("./redis")
 require("./nodemailer")
 
-require("./services/Mailer")
-require("./services/Responder")
+require("./services/mailer")
+require("./services/responder")

@@ -1,22 +1,21 @@
-const config = require("../config");
-
-const defaultResponder = require("../services/Responder");
-let Responder = defaultResponder;
-
 const Queue = require("bee-queue");
-const Redis = require("redis");
+const redis = require("redis");
+
+const config = require("../config");
+const defaultResponder = require("../services/responder");
+let responder = defaultResponder;                                                        // TODO: find a better pattern
 
 const setResponder = (responder=null) => {
   if(responder != null){
-    Responder = responder;
+    responder = responder;
   }
   else{
-    Responder = defaultResponder;
+    responder = defaultResponder;
   }
 }
 
-// redis
-const client = Redis.createClient(config.redis);
+// Redis
+const client = redis.createClient(config.redis);
 client.on('ready', () => {
   console.log('Redis is now ready');
 })
@@ -40,16 +39,16 @@ suggestion:
 */
 const respondQueue = new Queue("responder", {redis: client, removeOnSuccess: true, removeOnFailure: true});
 const maxQueueSize = 2;
-let queueSize = 0;    //// WARNING: INVOLVING THIS VARIABLE MEANS NOT SCALABLE (MUST HAVE 1 UPDATER AND 1 RESPONDER/WORKER)
+let queueSize = 0;    //// WARNING: INVOLVING THIS VARIABLE MEANS NOT SCALABLE (MUST HAVE 1 UPDATER AND 1 rESPONDER/WORKER)
 respondQueue.on('ready', () => {
   console.log('respondQueue is now ready');
   queueSize = 0;
 });
 respondQueue.on('error', (err) => {
-  console.log(`A respondQueue error happened: ${err.message}`);
+  console.err(`A respondQueue error happened: ${err.message}`);
 });
 respondQueue.on('failed', (job, err) => {
-  console.log(`Job ${job.id} failed with error ${err.message}`);
+  console.err(`Job ${job.id} failed with error ${err.message}`);
   queueSize -= 1;
 });
 respondQueue.on('succeeded', (job, result) => {
@@ -77,8 +76,8 @@ const enqueue = async (results, responder=null) => {
 };
 
 
-respondQueue.process(config.workersResponder, async (job) => {
-  await Responder(job.data);
+respondQueue.process(config.workersCount.responder, async (job) => {
+  await responder(job.data);
   // job will leave queue after the process is succeed
   return true;
 });

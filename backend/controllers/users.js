@@ -1,35 +1,40 @@
-const RegistrarService = require("../services/Registrar");
+const registrarService = require("../services/registrar");
 
-const Users = {};
-
-Users.getUser = async (req, res) => {
+const getUser = async (req, res) => {
   try {
-    const user = await RegistrarService.getUser(req.query.user_id);
+    const user = await registrarService.getUser(req.query.user_id);
     res.json(user);
   } catch (err) {
-    res.status(500).json({ message: err });
+    console.err(err);
+    res.status(500);
   }
 };
 
-Users.addUser = async (req, res) => {
+const addUser = async (req, res) => {
   try {
-    const newUser = await RegistrarService.addUser(req.body.email);
+    const newUser = await registrarService.addUser(req.body.email);
     res.json(newUser);
   } catch (err) {
-    res.status(500).json({ message: err });
+    console.err(err);
+    res.status(500);
   }
 };
 
-Users.updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
-    const updatedUser = await RegistrarService.updateUser({
+    const updatedUser = await registrarService.updateUser({
       user_id: req.body.user_id,
       newUser: req.body,
     });
     res.json(updatedUser);
   } catch (err) {
-    res.status(500).json({ message: err });
+    console.err(err);
+    res.status(500);
   }
 };
 
-module.exports = Users;
+module.exports = {
+  getUser, 
+  addUser, 
+  updateUser
+};

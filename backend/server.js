@@ -1,5 +1,7 @@
 // listen
+const config = require("./config");
 const app = require("./app");
-app.listen(process.env.PORT, () => {
-  console.log("Server listening on port " + process.env.PORT);
+
+app.listen(config.port, () => {
+  console.log("Server listening on port " + config.port);
 });
