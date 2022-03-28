@@ -1,10 +1,9 @@
 const config = require("../config");
 const axios = require("axios");
 
-const Lister = {};
 const pageSize = 10000;       // display course per page
 
-Lister.getSearchResults = async (queryString) => {
+const getSearchResults = async (queryString) => {
   const url = config.apiUrl + "/search/v1";
   const payload = {
     page: 1,                      // scroll down == increase page
@@ -32,7 +31,7 @@ Lister.getSearchResults = async (queryString) => {
   return courses;
 };
 
-Lister.getSections = async (subject_id, course_id) => {
+const getSections = async (subject_id, course_id) => {
   const url = config.apiUrl + "/search/v1/enrollmentPackages/" + config.termCode + "/" + subject_id + "/" + course_id
   const apiResult = await axios.get(url);
   /* format
@@ -67,4 +66,7 @@ Lister.getSections = async (subject_id, course_id) => {
   return sections;
 };
 
-module.exports = Lister;
+module.exports = {
+  getSearchResults,
+  getSections
+};

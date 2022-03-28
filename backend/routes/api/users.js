@@ -1,13 +1,13 @@
-const Router = require("express").Router();
-const Users = require("../../controllers/Users");
+const router = require("express").Router();
+const users = require("../../controllers/users");
 
 // returns user of this user_id
-Router.get("/", Users.getUser);
+router.get("/", users.getUser);
 
 // registers a new user
-Router.post("/", Users.addUser);
+router.post("/", users.addUser);
 
 // update an existing user
-Router.put("/", Users.updateUser);
+router.put("/", users.updateUser);
 
-module.exports = Router;
+module.exports = router;

@@ -1,21 +1,21 @@
-const CoursesModel = require("../models/Courses");
-const UsersModel = require("../models/Users");
+const coursesRepository = require("../repositories/courses");
+const usersRepository = require("../repositories/users");
 
-const defaultMailer = require("../subscribers/Mailer")
+const defaultMailer = require("../subscribers/mailer");     // TODO: find a better pattern than this half dependency-injection
 
 // interface
-const run = async (results, Mailer=null) => {
-  if(Mailer == null){
-    Mailer = defaultMailer
+const run = async (results, mailer=null) => {
+  if(mailer == null){
+    mailer = defaultMailer;
   }
-  await processCourses(results, Mailer);
+  await processCourses(results, mailer);
 };
 
-processCourses = async (results, Mailer) => {
-  results.map(course => processCourse(course, Mailer));
+const processCourses = async (results, mailer) => {
+  results.map(course => processCourse(course, mailer));
 }
 
-processCourse = async (results, Mailer) => {
+const processCourse = async (results, mailer) => {
   if (results.length == 0) return;
 
   const course_id = results[0].courseId;
@@ -62,7 +62,7 @@ processCourse = async (results, Mailer) => {
   }
 
   // check each section in the database
-  const course_data = (await CoursesModel.getCourse(course_id))[0]; // it returns list, even if it is singular in practice
+  const course_data = (await coursesRepository.find(course_id))[0]; // it returns list, even if it is singular in practice
   const course_name = course_data.course_name;
 
   for (let i = 0; i < course_data.sections.length; i++) {
@@ -97,7 +97,7 @@ processCourse = async (results, Mailer) => {
         // get user details
         const email = subscriber.email;
         const last_sent = subscriber.last_sent;
-        const users = await UsersModel.findEmail(email);
+        const users = await usersRepository.findEmail(email);
 
         if (users.length == 0) continue;
 
@@ -122,13 +122,13 @@ processCourse = async (results, Mailer) => {
             prev_status: section_data.prev_status,
             new_status: section_data.status,
           };
-          Mailer.notify(mailParams); // no need to await for anything
+          mailer.notify(mailParams); // no need to await for anything
         }
       }
     }
   }
   // update database
-  CoursesModel.updateCourse(course_data);
+  coursesRepository.update(course_data);
 };
 
 module.exports = run;

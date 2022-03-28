@@ -42,25 +42,21 @@ const CourseSchema = mongoose.Schema({
     },
   ],
 });
-
 // status can be 'OPEN', 'WAITLISTED', 'CLOSED', or 'unknown'
 
-module.exports = mongoose.model("Courses", CourseSchema);
+const Courses = mongoose.model("Courses", CourseSchema);
 
-const Courses = mongoose.model("Courses");
-const CoursesModel = {};
-
-CoursesModel.getCourse = (course_id) => {
+const find = (course_id) => {
   return Courses.find({ course_id: course_id });
 };
 
-CoursesModel.addCourse = async (adding_course) => {
+const create = async (adding_course) => {
   const course = new Courses(adding_course);
   const savedCourse = await course.save();
   return savedCourse;
 };
 
-CoursesModel.updateCourse = async (updated_course) => {
+const update = async (updated_course) => {
   const updatedCourse = await Courses.findByIdAndUpdate(
     updated_course._id,
     updated_course,
@@ -69,12 +65,18 @@ CoursesModel.updateCourse = async (updated_course) => {
   return updatedCourse;
 };
 
-CoursesModel.removeCourse = async (removing_course) => {
+const remove = async (removing_course) => {
   await Courses.deleteOne({ _id: removing_course._id });
 };
 
-CoursesModel.getAll = () => {
+const all = () => {
   return Courses.find({}); // async
 };
 
-module.exports = CoursesModel;
+module.exports = {
+  find,
+  create,
+  update,
+  remove,
+  all
+};
