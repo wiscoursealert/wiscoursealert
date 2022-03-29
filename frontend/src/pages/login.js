@@ -21,7 +21,7 @@ const Login = ({ handlePageChange }) => {
             <div>
               <div className="flex flex-row items-end">
                 <img className="h-[7vmin]" src={Logo} alt="logo" />
-                <img className="h-[9vmin] ml-9" src={Badger} alt="badgee" />
+                <img className="h-[9vmin] ml-9 transition ease-in-out hover:scale-110 duration-300" src={Badger} alt="badgee" />
               </div>
 
               <p className="mt-2 text-[3vmin] text-gray-600 font-[495]">

@@ -19,7 +19,7 @@ const AddForm = () => {
         </div>
       </div>
       <button
-        className="w-1/5 text-sm text-white px-2 rounded-r-md bg-sky-600 hover:bg-sky-700 border-sky-600 hover:border-sky-700 transition ease-in-out duration:500 hover:scale-105"
+        className="w-1/5 text-sm text-white px-2 rounded-r-md bg-sky-600 hover:bg-sky-700 border-sky-600 hover:border-sky-700 transition ease-in-out duration-300 hover:scale-105"
         type="submit"
       >
         Add

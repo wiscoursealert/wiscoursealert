@@ -18,7 +18,7 @@ const Footer = () => {
         </div>
         <button
           type="submit"
-          className="text-[3.3vmin] px-[3vmin] py-[1.3vmin] rounded-xl bg-green-500 text-white hover:bg-green-600 transition ease-in-out duration:350 hover:scale-105 hover:-translate-y-1"
+          className="text-[3.3vmin] px-[3vmin] py-[1.3vmin] rounded-xl bg-green-500 text-white hover:bg-green-600 transition ease-in-out duration-300 hover:scale-105 hover:-translate-y-1"
         >
           Save
         </button>
