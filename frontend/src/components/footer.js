@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
-    <form className="w-full bottom-0 bg-white border-2 border-gray-200">
-      <div className="my-[2vh] mx-[4vw] h-[11vh] flex justify-between items-center">
+    <form className="w-full sticky bottom-0 z-50  bg-white border-2 border-gray-200">
+      <div className="my-[2vh] mx-[4vw] h-[10vh] flex justify-between items-center">
         <div className="flex flex-row">
           <p className="text-[3.3vmin] font-base">
             For each section, don't email me twice in

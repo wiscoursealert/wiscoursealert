@@ -7,16 +7,16 @@ const Edit = () => {
   let [searchParam, setSearchParam] = useSearchParams();
 
   return (
-    <div className="top-0">
+    <>
       <Navigation />
       <div className="my-[2vh] mx-[4vw] ">
-        <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[3vmin] py-[1.5vmin] rounded-3xl">
+        <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[4vmin] py-[1.5vmin] rounded-3xl">
           Your watching list
         </p>
         <Cards />        
       </div>
       <Footer /> 
-    </div>
+    </>
   );
 };
 
