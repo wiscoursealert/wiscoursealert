@@ -1,10 +1,8 @@
-import { useSearchParams } from "react-router-dom";
 import Navigation from "../components/navigation";
 import Cards from "../components/cards";
 import Footer from "../components/footer";
 
 const Edit = () => {
-  let [searchParam, setSearchParam] = useSearchParams();
 
   return (
     <>
