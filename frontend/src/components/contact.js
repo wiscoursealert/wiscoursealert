@@ -1,9 +1,9 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 const Contact = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog

@@ -2,7 +2,7 @@ import Logo from "../images/logo3-edit.png";
 
 const Navigation = () => {
   return (
-    <nav className="w-full sticky top-0 z-50 bg-red-700">
+    <nav className="w-full z-10 sticky top-0 bg-red-700">
       <div className="flex items-center justify-between h-[10vh] px-[4vw]">
         <div className="flex-1 flex sm:items-stretch sm:justify-start">
           <img

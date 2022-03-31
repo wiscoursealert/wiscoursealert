@@ -1,15 +1,30 @@
-const Footer = () => {
+import { useState } from "react";
+
+const Footer = ({ handleUpdate }) => {
+  let [delay, setDelay] = useState(0);
+
+  const handleDelay = (event) => {
+    setDelay(event.target.value);
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    handleUpdate(delay);
+  }
+
   return (
-    <form className="w-full sticky bottom-0 z-50  bg-white border-2 border-gray-200">
+    <form onSubmit={handleSubmit} className="w-full sticky bottom-0 bg-white border-2 border-gray-200">
       <div className="my-[2vh] mx-[4vw] h-[10vh] flex justify-between items-center">
-        <div className="flex flex-row">
-          <p className="text-[3.3vmin] font-base">
+        <div className="flex flex-row items-center">
+          <p className="text-[3vmin] lg:text-[3.3vmin] font-base">
             For each section, don't email me twice in
           </p>
           <input
+            onChange={handleDelay}
             id="time"
             name="minute"
-            type="text"
+            type="number"
+            min="0"
             required
             className="w-[4vw] mx-[1vw] py-[0.8vh] text-[2.5vmin] text-center font-base border-2 border-gray-300 placeholder-gray-400 text-gray-500 rounded-lg hover:border-red-300 focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10"
             placeholder="0"
