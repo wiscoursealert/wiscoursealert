@@ -24,7 +24,7 @@ const getSearchResults = async (queryString) => {
     return {
       course_id: entry.courseId,
       course_name: entry.courseDesignation,
-      course_full_name: entry.title,
+      course_title: entry.title,
       subject_id: entry.subject.subjectCode,
     };
   });
@@ -56,7 +56,7 @@ const getSections = async (subject_id, course_id) => {
         .map((x) => {
           return x.sectionNumber;
         })[0],
-      Lab_name: entry.sections
+      lab_name: entry.sections
         .filter((x) => x.type == "LAB")
         .map((x) => {
           return x.sectionNumber;
