@@ -56,7 +56,7 @@ const getSections = async (subject_id, course_id) => {
         .map((x) => {
           return x.sectionNumber;
         })[0],
-      Lab_name: entry.sections
+      lab_name: entry.sections
         .filter((x) => x.type == "LAB")
         .map((x) => {
           return x.sectionNumber;
