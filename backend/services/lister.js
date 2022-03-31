@@ -24,7 +24,7 @@ const getSearchResults = async (queryString) => {
     return {
       course_id: entry.courseId,
       course_name: entry.courseDesignation,
-      course_full_name: entry.title,
+      course_title: entry.title,
       subject_id: entry.subject.subjectCode,
     };
   });
