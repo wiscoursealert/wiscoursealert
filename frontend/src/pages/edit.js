@@ -21,14 +21,12 @@ const Edit = () => {
     let temp = Object.assign({}, user);
     temp.delay = parseInt(delay);
     setUser(temp);
-    console.log("FINAL", temp);
   }
 
   const updateCourse = (course) => {
     for (var i = 0; i < user.subscribed.length; i++) if (user.subscribed[i].course_id === course.course_id) {
       let temp = Object.assign({}, user);
       temp.subscribed[i] = course;
-      console.log(temp);
       setUser(temp);
     }
   }

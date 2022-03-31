@@ -54,7 +54,6 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
 
   const handleClick = (event) => {
     const sectionID = event.currentTarget.getAttribute("data-id");
-    console.log(sectionID);
     deleteSection(sectionID);
   };
 
