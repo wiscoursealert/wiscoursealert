@@ -33,11 +33,11 @@ const SearchBar = ({addCard}) => {
   const handleSearchCourse = async (event) => {
     event.preventDefault();
     try{
-      setCourses(await fetch(config.apiUrl + '/search', {
+      setCourses((await fetch(config.apiUrl + '/search', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({queryString: key})
-      }));
+      })).json());
     } catch(e){
       console.log('Connection Failed');
       alert('Searching failed, please try again later');       // TODO: decorate this?
