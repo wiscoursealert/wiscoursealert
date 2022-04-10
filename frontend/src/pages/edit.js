@@ -63,7 +63,7 @@ const Edit = () => {
   }
   return (
     <div className="flex flex-col min-h-screen justify-between">
-      <Navigation />
+      <Navigation curEmail={user !== null? user.email:"Loading..."} />
       <div className="my-[2vh] mx-[4vw] flex-grow">
         <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[4vmin] py-[1.5vmin] rounded-3xl">
           Your watching list

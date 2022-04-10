@@ -1,6 +1,6 @@
 import Logo from "../images/logo3-edit.png";
 
-const Navigation = () => {
+const Navigation = ({curEmail}) => {
   return (
     <nav className="w-full z-10 sticky top-0 bg-red-700">
       <div className="flex items-center justify-between h-[10vh] px-[4vw]">
@@ -12,7 +12,7 @@ const Navigation = () => {
           />
         </div>
         <button className="px-[2vmin] py-[1vmin] text-[2.5vmin] font-normal bg-gray-200 text-gray-500 hover:bg-gray-600 hover:text-gray-100 rounded-lg transition ease-out hover:scale-[1.04] duration-300">
-          ith@gmail.com
+          {curEmail}
         </button>
       </div>
     </nav>
