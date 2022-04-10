@@ -16,7 +16,7 @@ const Edit = () => {
     }
     (async () => {
       try{
-        const fullUser = (await fetch(config.apiUrl + '/users' + '?user_id=' + params.userId)).json();
+        const fullUser = (await fetch(config.apiUrl + '/users?user_id=' + params.userId)).json();
         setUser(fullUser);
       } catch(e){
         console.log('Connection Failed')
