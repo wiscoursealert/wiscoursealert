@@ -19,7 +19,7 @@ const Edit = () => {
         const fullUser = (await fetch(config.apiUrl + '/users' + '?user_id=' + params.userId)).json();
         setUser(fullUser);
       } catch(e){
-        console.log("Connection Failed")
+        console.log('Connection Failed')
         setUser({subscribed: []});
       }
     })();
@@ -36,10 +36,21 @@ const Edit = () => {
     setUser(temp);
   }
 
-  const handleUpdate = (delay) => {
+  const handleUpdate = async (delay) => {
     let temp = Object.assign({}, user);
     temp.delay = parseInt(delay);
     setUser(temp);
+
+    try{
+      await fetch(config.apiUrl + '/users', {
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(temp)
+      })
+    } catch(e){
+      console.log('Connection Failed');
+      alert('Saving failed, please try again later');       // TODO: decorate this?
+    }
   }
 
   const updateCourse = (course) => {
@@ -59,7 +70,7 @@ const Edit = () => {
         {user !== null? (<Cards initialCourses={user.subscribed} addCard={addCard} updateCourse={updateCourse}/> ):
         (<div>Loading...</div>)}       
       </div>
-      <Footer handleUpdate={handleUpdate}/> 
+      <Footer handleUpdate={handleUpdate} curDelay={user !== null && user.delay != null? user.delay:config.minDelay}/> 
     </div>
   );
 };
