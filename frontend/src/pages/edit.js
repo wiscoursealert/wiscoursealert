@@ -2,10 +2,28 @@ import Navigation from "../components/navigation";
 import Cards from "../components/cards";
 import Footer from "../components/footer";
 import { useEffect, useState } from "react";
+import config from "../config.json";
+import { useParams } from 'react-router-dom';
 
 
 const Edit = () => {
-  let [user, setUser] = useState({subscribed: []});
+  let params = useParams();
+  let [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if(user != null){
+      return;
+    }
+    (async () => {
+      try{
+        const fullUser = (await fetch(config.apiUrl + '/users' + '?user_id=' + params.userId)).json();
+        setUser(fullUser);
+      } catch(e){
+        console.log("Connection Failed")
+        setUser({subscribed: []});
+      }
+    })();
+  }, [user, params]);
 
   const addCard = (toAdd) => {
     for (var course of user.subscribed) if (course.course_id === toAdd.course_id) {
@@ -38,7 +56,8 @@ const Edit = () => {
         <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[4vmin] py-[1.5vmin] rounded-3xl">
           Your watching list
         </p>
-        <Cards initialCourses={user.subscribed} addCard={addCard} updateCourse={updateCourse}/>        
+        {user !== null? (<Cards initialCourses={user.subscribed} addCard={addCard} updateCourse={updateCourse}/> ):
+        (<div>Loading...</div>)}       
       </div>
       <Footer handleUpdate={handleUpdate}/> 
     </div>
