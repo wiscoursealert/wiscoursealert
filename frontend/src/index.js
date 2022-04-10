@@ -9,7 +9,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="/edit" element={<Edit />} />
+      <Route path="edit/:userId" element={<Edit />} />
     </Routes>
   </BrowserRouter>,
   document.getElementById('root')
