@@ -1,7 +1,8 @@
 import Navigation from "../components/navigation";
 import Cards from "../components/cards";
 import Footer from "../components/footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 
 const Edit = () => {
   let [user, setUser] = useState({subscribed: []});
