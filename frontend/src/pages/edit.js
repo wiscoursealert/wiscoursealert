@@ -19,7 +19,8 @@ const Edit = () => {
         const fullUser = (await fetch(config.apiUrl + '/users?user_id=' + params.userId)).json();
         setUser(fullUser);
       } catch(e){
-        console.log('Connection Failed')
+        console.log('Connection Failed');
+        alert("User does not exist");
         setUser({subscribed: []});
       }
     })();
