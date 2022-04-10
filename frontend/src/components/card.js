@@ -6,10 +6,10 @@ const Card = ({ cardCourse, updateCourse }) => {
   let [course, setCourse] = useState(cardCourse);
 
   const addSection = (section) => {
-    for (var own of course.sections) if (own.section_id === section) return;
+    for (var own of course.sections) if (own.section_id === section.section_id) return;
 
     let temp = Object.assign({}, course);
-    temp.sections.push({ section_id: section });
+    temp.sections.push(section);
     
     setCourse(temp);
     updateCourse(temp);
@@ -41,12 +41,12 @@ const Card = ({ cardCourse, updateCourse }) => {
           <Sections
             deleteSection={deleteSection}
             sections={course.sections}
-            subjectID={course.subjectID}
+            subjectID={course.subject_id}
             courseID={course.course_id}
           />
           <AddForm
             addSection={addSection}
-            subjectID={course.subjectID}
+            subjectID={course.subject_id}
             courseID={course.course_id}
           />
         </div>

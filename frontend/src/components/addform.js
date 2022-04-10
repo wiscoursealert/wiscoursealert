@@ -8,11 +8,11 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
 
   const getSectionName = (section) => {
     var name = "";
-    if (section.lecture_name.length !== 0)
+    if (section.lecture_name !== undefined)
       name = name.concat("LEC ", section.lecture_name);
-    if (section.discussion_name.length !== 0)
+    if (section.discussion_name !== undefined)
       name = name.concat(" / DIS ", section.discussion_name);
-    if (section.lab_name.length !== 0)
+    if (section.lab_name !== undefined)
       name = name.concat(" / LAB ", section.lab_name);
     return name;
   };
@@ -26,6 +26,7 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
           body: JSON.stringify({subject_id: subjectID, course_id: courseID})
         })).json());
       } catch(e){
+        console.error(e);
         console.log('Connection Failed');
         alert('Sections fetching failed, please try again later');       // TODO: decorate this?
       }
@@ -41,7 +42,7 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
     if (value === "Select a section") return;
     for (var section of allSections) {
       if (section.section_id === value) {
-        addSection(value);
+        addSection(section);
         break;
       }
     }

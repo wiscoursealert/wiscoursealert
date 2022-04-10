@@ -37,11 +37,11 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
 
   const getSectionName = (section) => {
     var name = "";
-    if (section.lecture_name.length !== 0)
+    if (section.lecture_name !== undefined)
       name = name.concat("LEC ", section.lecture_name);
-    if (section.discussion_name.length !== 0)
+    if (section.discussion_name !== undefined)
       name = name.concat(" / DIS ", section.discussion_name);
-    if (section.lab_name.length !== 0)
+    if (section.lab_name !== undefined)
       name = name.concat(" / LAB ", section.lab_name);
     return name;
   };
@@ -60,7 +60,11 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
   return (
     <div className="overflow-y-auto h-[60%] w-full">
       {sections.map((section) => {
-        const trueSection = findSection(section);
+        const trueSection = section;
+        if(section === null){
+          return (<div></div>);
+        }
+        console.log(section);
         let attr =
           trueSection.status === "OPEN"
             ? "bg-green-500"
