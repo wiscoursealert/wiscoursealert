@@ -1,8 +1,10 @@
-const Router = require("express").Router();
-const Lister = require("../../controllers/Lister");
+const router = require("express").Router();
+const lister = require("../../controllers/lister");
 
-Router.post("/search", Lister.getSearchResults);
+// search for courses
+router.post("/search", lister.getSearchResults);
 
-Router.post("/sections", Lister.getSections);
+// get section details
+router.post("/sections", lister.getSections);
 
-module.exports = Router;
+module.exports = router;
