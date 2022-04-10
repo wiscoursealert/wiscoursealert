@@ -1,5 +1,5 @@
 import Courses from "./courses";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import config from "../config.json";
 
 /*let placeholder_courses = [
@@ -16,10 +16,6 @@ const SearchBar = ({addCard}) => {
   let [key, setKey] = useState("");
   let [courses, setCourses] = useState([]);
 
-  useEffect(() => {
-    setCourses([]);
-  }, [])
-
   const handleChange = (event) => {
     setToAdd({id:"-1"});
     setKey(event.target.value);
@@ -32,6 +28,7 @@ const SearchBar = ({addCard}) => {
 
   const handleSearchCourse = async (event) => {
     event.preventDefault();
+    setCourses([]);
     try{
       setCourses(await (await fetch(config.apiUrl + '/search', {
         method: 'post',
