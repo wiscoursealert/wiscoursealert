@@ -20,7 +20,7 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
   useEffect(() => {
     (async () => {
       try{
-        setAllSections((await fetch(config.apiUrl + '/sections', {
+        setAllSections(await (await fetch(config.apiUrl + '/sections', {
           method: 'post',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({subject_id: subjectID, course_id: courseID})
