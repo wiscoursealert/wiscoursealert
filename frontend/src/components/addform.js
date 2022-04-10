@@ -1,37 +1,38 @@
 import { useEffect, useState } from "react";
-
-let allSections = [
-  {
-    section_id: "000",
-    status: "CLOSED",
-    lecture_name: "002",
-    discussion_name: "001",
-    lab_name: "",
-  },
-  {
-    section_id: "100",
-    status: "OPEN",
-    lecture_name: "001",
-    discussion_name: "001",
-    lab_name: "",
-  },
-  {
-    section_id: "200",
-    status: "WAITLISTED",
-    lecture_name: "001",
-    discussion_name: "002",
-    lab_name: "",
-  },
-  {
-    section_id: "300",
-    status: "CLOSED",
-    lecture_name: "001",
-    discussion_name: "003",
-    lab_name: "001",
-  },
-];
+import config from "../config.json";
 
 const AddForm = ({ addSection, subjectID, courseID }) => {
+  let [allSections, setAllSections] = useState([
+    {
+      section_id: "000",
+      status: "CLOSED",
+      lecture_name: "002",
+      discussion_name: "001",
+      lab_name: "",
+    },
+    {
+      section_id: "100",
+      status: "OPEN",
+      lecture_name: "001",
+      discussion_name: "001",
+      lab_name: "",
+    },
+    {
+      section_id: "200",
+      status: "WAITLISTED",
+      lecture_name: "001",
+      discussion_name: "002",
+      lab_name: "",
+    },
+    {
+      section_id: "300",
+      status: "CLOSED",
+      lecture_name: "001",
+      discussion_name: "003",
+      lab_name: "001",
+    },
+  ]);
+
   let [value, setValue] = useState("Select a section");
 
   const getSectionName = (section) => {
@@ -46,8 +47,19 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
   };
 
   useEffect(() => {
-    async function getAllSections() {}
-  }, []);
+    (async () => {
+      try{
+        setAllSections((await fetch(config.apiUrl + '/sections', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({subject_id: subjectID, course_id: courseID})
+        })).json());
+      } catch(e){
+        console.log('Connection Failed');
+        alert('Sections fetching failed, please try again later');       // TODO: decorate this?
+      }
+    })();
+  }, [subjectID, courseID]);
 
   const handleChange = (event) => {
     setValue(event.target.value);
