@@ -2,14 +2,14 @@ import Courses from "./courses";
 import {useEffect, useState} from "react";
 import config from "../config.json";
 
-let initial_courses = [
+/*let placeholder_courses = [
   {
     course_id: "0001",
     course_name: "CS 300",
     course_title: "Programming II",
     subject_id: "300",
   }
-]
+]*/
 
 const SearchBar = ({addCard}) => {
   let [toAdd, setToAdd] = useState({id:"-1"});
@@ -17,7 +17,7 @@ const SearchBar = ({addCard}) => {
   let [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    setCourses(initial_courses);
+    setCourses([]);
   }, [])
 
   const handleChange = (event) => {
