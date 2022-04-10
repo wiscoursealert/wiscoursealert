@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import config from "../config.json";
 
 const Subscribe = ({handleRouteChange, handlePageChange}) => {
   const [email, setEmail] = useState("")
@@ -7,8 +8,23 @@ const Subscribe = ({handleRouteChange, handlePageChange}) => {
     setEmail(event.target.value);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    if(!email.match('^[A-Za-z0-9._%+-]+@wisc.edu$')){
+      alert('Your must use @wisc.edu email to register');
+      return;
+    }
+    try{
+      await fetch(config.apiUrl + '/users', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email})
+      })
+    } catch(e){
+      console.log('Connection Failed');
+      alert('Connection error, please try again later');       // TODO: decorate this?
+      return;
+    }
     handlePageChange("completed");
   }
 
@@ -40,10 +56,9 @@ const Subscribe = ({handleRouteChange, handlePageChange}) => {
       </form>
       <div className="flex justify-center mt-5">
         <p
-          onClick={() => handleRouteChange("signin")}
-          className="text-[2.5vmin] font-medium text-red-600 hover:text-red-700"
+          className="text-[1.5vmin] font-medium text-red-600 hover:text-red-700"
         >
-          Already have an account?
+          Already have an account? Type in your email again to re-retrieve the link to the subscription management portal.
         </p>
       </div>
     </>
