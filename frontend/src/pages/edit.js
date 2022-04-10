@@ -51,7 +51,9 @@ const Edit = () => {
     } catch(e){
       console.log('Connection Failed');
       alert('Saving failed, please try again later');       // TODO: decorate this?
+      return;
     }
+    alert('Saving success!');
   }
 
   const updateCourse = (course) => {
