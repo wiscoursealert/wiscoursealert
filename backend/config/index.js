@@ -29,5 +29,8 @@ module.exports = {
 	apiUrl: 'https://public.enroll.wisc.edu/api', 
 	termCode: 1232, 															// Fall 2022, retrieved from enroll.wisc
 	fetchCooldown: 10000, 												// how frequent the updater will refresh the course info, in milliseconds   
-	frontUrl: process.env.URL_MAIN
+	frontUrl: process.env.URL_MAIN,
+	policies: {
+		minDelay: 10
+	}
 };
