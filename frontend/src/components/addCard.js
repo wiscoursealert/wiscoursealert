@@ -1,7 +1,7 @@
 import { useState } from "react";
 import SearchModal from "./searchModal";
 
-const AddCard = ({addCard}) => {
+const AddCard = ({addCard, addLoading}) => {
   let [open, setOpen] = useState(false);
 
   return (
@@ -25,7 +25,7 @@ const AddCard = ({addCard}) => {
           />
         </svg>
       </button>
-      <SearchModal open={open} setOpen={setOpen} addCard={addCard} />
+      <SearchModal open={open} setOpen={setOpen} addCard={addCard} addLoading={addLoading}/>
     </>
   );
 };

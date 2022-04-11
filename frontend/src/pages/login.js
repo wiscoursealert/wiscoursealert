@@ -10,6 +10,17 @@ const Login = ({ handlePageChange }) => {
   const [status, setStatus] = useState("subscribe");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingVal, setLoadingVal] = useState(0);
+
+  const addLoading = (val) => {
+    if(loadingVal <= 0 && loadingVal + val > 0){
+      setLoading(true);
+    }
+    else if(loadingVal > 0 && loadingVal + val <= 0){
+      setLoading(false);
+    }
+    setLoadingVal(loadingVal + val);
+  }
 
   const handleRouteChange = (route) => {
     setStatus(route);
@@ -34,7 +45,7 @@ const Login = ({ handlePageChange }) => {
               <Subscribe
                 handleRouteChange={handleRouteChange}
                 handlePageChange={handlePageChange}
-                setLoading={setLoading}
+                addLoading={addLoading}
               />
             ) : (
               <SignIn

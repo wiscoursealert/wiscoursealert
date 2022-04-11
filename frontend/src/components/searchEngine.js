@@ -11,7 +11,7 @@ import config from "../config.json";
   }
 ]*/
 
-const SearchBar = ({addCard}) => {
+const SearchBar = ({addCard, addLoading}) => {
   let [toAdd, setToAdd] = useState({id:"-1"});
   let [key, setKey] = useState("");
   let [courses, setCourses] = useState([]);
@@ -28,6 +28,7 @@ const SearchBar = ({addCard}) => {
 
   const handleSearchCourse = async (event) => {
     event.preventDefault();
+    addLoading(1);
     setCourses([]);
     try{
       setCourses(await (await fetch(config.apiUrl + '/search', {
@@ -39,6 +40,8 @@ const SearchBar = ({addCard}) => {
       console.log('Connection Failed');
       alert('Searching failed, please try again later');       // TODO: decorate this?
     }
+    console.log("HEYYY");
+    addLoading(-1);
   }
 
   const handleAddCourse = (event) => {

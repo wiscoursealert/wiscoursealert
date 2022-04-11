@@ -2,7 +2,7 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import SearchEngine from "./searchEngine";
 
-const SearchModal = ({ open, setOpen, addCard }) => {
+const SearchModal = ({ open, setOpen, addCard, addLoading }) => {
   const cancelButtonRef = useRef(null);
 
   return (
@@ -42,7 +42,7 @@ const SearchModal = ({ open, setOpen, addCard }) => {
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <div className="p-[6vmin] w-[84vw] h-[80vh] relative inline-block bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all align-middle">
-              <SearchEngine addCard={addCard}/>
+              <SearchEngine addCard={addCard} addLoading={addLoading}/>
             </div>
           </Transition.Child>
         </div>

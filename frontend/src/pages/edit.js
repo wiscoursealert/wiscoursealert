@@ -4,17 +4,31 @@ import Footer from "../components/footer";
 import { useEffect, useState } from "react";
 import config from "../config.json";
 import { useParams } from 'react-router-dom';
+import Loading from "../components/loading";
 
 
 const Edit = () => {
   let params = useParams();
   let [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+  let loadingVal = 0;
+
+  const addLoading = (val) => {
+    if(loadingVal <= 0 && loadingVal + val > 0){
+      setLoading(true);
+    }
+    else if(loadingVal > 0 && loadingVal + val <= 0){
+      setLoading(false);
+    }
+    loadingVal += val;
+  }
 
   useEffect(() => {
     if(user != null){
       return;
     }
     (async () => {
+      addLoading(1);
       try{
         const fullUser = JSON.parse(await (await fetch(config.apiUrl + '/users?user_id=' + params.userId)).text());
         setUser(fullUser);
@@ -24,6 +38,7 @@ const Edit = () => {
         alert("User does not exist");
         setUser({subscribed: []});
       }
+      addLoading(-1);
     })();
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -39,6 +54,7 @@ const Edit = () => {
   }
 
   const handleUpdate = async (delay) => {
+    addLoading(1);
     let temp = Object.assign({}, user);
     temp.delay = parseInt(delay);
     setUser(temp);
@@ -52,9 +68,11 @@ const Edit = () => {
     } catch(e){
       console.log('Connection Failed');
       alert('Saving failed, please try again later');       // TODO: decorate this?
+      addLoading(-1);
       return;
     }
     alert('Saving success!');
+    addLoading(-1);
   }
 
   const updateCourse = (course) => {
@@ -76,10 +94,11 @@ const Edit = () => {
         <p className="text-[4.5vmin] font-semibold mb-[3vh] w-fit py-[1.5vmin] rounded-3xl">
           Your watchlist
         </p>
-        {user !== null? (<Cards coursesRaw={JSON.stringify(user.subscribed)} addCard={addCard} updateCourse={updateCourse}/> ):
+        {user !== null? (<Cards coursesRaw={JSON.stringify(user.subscribed)} addCard={addCard} updateCourse={updateCourse} addLoading={addLoading}/> ):
         (<div>Loading...</div>)}       
       </div>
       <Footer handleUpdate={handleUpdate} curDelay={user !== null && user.delay !== undefined? user.delay:null}/> 
+      <Loading open={loading}/>
     </div>
   );
 };

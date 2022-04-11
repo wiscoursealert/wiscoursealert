@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import config from "../config.json";
 
-const Subscribe = ({handleRouteChange, handlePageChange, setLoading}) => {
+const Subscribe = ({handleRouteChange, handlePageChange, addLoading}) => {
   const [email, setEmail] = useState("")
 
   const handleChange = (event) => {
@@ -14,7 +14,7 @@ const Subscribe = ({handleRouteChange, handlePageChange, setLoading}) => {
       alert('Your must use @wisc.edu email to register');
       return;
     }
-    setLoading(true);
+    addLoading(1);
     try{
       await fetch(config.apiUrl + '/users', {
         method: 'post',
@@ -24,10 +24,10 @@ const Subscribe = ({handleRouteChange, handlePageChange, setLoading}) => {
     } catch(e){
       console.log('Connection Failed');
       alert('Connection error, please try again later');       // TODO: decorate this?
-      setLoading(false);
+      addLoading(-1);
       return;
     }
-    setLoading(false);
+    addLoading(-1);
     handlePageChange("completed");
   }
 

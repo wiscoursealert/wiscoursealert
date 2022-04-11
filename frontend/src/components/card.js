@@ -3,7 +3,7 @@ import AddForm from "./addform";
 import Sections from "./sections";
 import config from "../config.json";
 
-const Card = ({ cardCourseRaw, updateCourse }) => {
+const Card = ({ cardCourseRaw, updateCourse, addLoading }) => {
   let [course, setCourse] = useState(JSON.parse(cardCourseRaw));
   let [allSections, setAllSections] = useState(null);
 
@@ -34,6 +34,7 @@ const Card = ({ cardCourseRaw, updateCourse }) => {
   useEffect(() => {
     (async () => {
       let asections = null;
+      addLoading(1);
       try{
         asections = await (await fetch(config.apiUrl + '/sections', {
           method: 'post',
@@ -44,6 +45,7 @@ const Card = ({ cardCourseRaw, updateCourse }) => {
         console.error(e);
         console.log('Connection Failed');
         alert('Sections fetching failed, please try again later');       // TODO: decorate this?
+        addLoading(-1);
         return;
       }
       const trueCourse = JSON.parse(cardCourseRaw);
@@ -53,6 +55,7 @@ const Card = ({ cardCourseRaw, updateCourse }) => {
         detailedSections.push(asections.filter(asection => asection.section_id === section.section_id)[0]);
       }
       setCourse(Object.assign(trueCourse, {sections: detailedSections}));
+      addLoading(-1);
     })();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
