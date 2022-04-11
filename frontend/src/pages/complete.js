@@ -2,11 +2,9 @@ import React from "react";
 import Logo from "../images/logo3-edit.png";
 import Contact from "../components/contact";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const Complete = () => {
   const [open, setOpen] = useState(false);
-  var id = 1;
 
   return (
     <>
@@ -26,16 +24,10 @@ const Complete = () => {
               completed!
             </p>
             <p className="text-[3vmin] mt-14 text-gray-400">
-              You can now edit your watching list using the link we sent to your
-              email
+              Please check your email for the link to the subscription management portal.
               <br />
-              Please keep it for future use.
+              Note that the link can be re-used anytime in this semester.
             </p>
-            <Link to={`/edit?id=${id}`}>
-              <p className="text-[3vmin] mt-5 text-red-500  hover:text-red-600">
-                {`wiscourse.com/edit?=${id}`}
-              </p>
-            </Link>
           </div>
         </div>
         <div className="flex justify-center mb-5">
