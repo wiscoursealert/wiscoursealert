@@ -70,11 +70,11 @@ const Edit = () => {
     }
   }
   return (
-    <div className="flex flex-col min-h-screen justify-between">
+    <div className="flex flex-col min-h-screen justify-between text-gray-600">
       <Navigation curEmail={user !== null? user.email:"Loading..."} />
       <div className="my-[2vh] mx-[4vw] flex-grow">
-        <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[4vmin] py-[1.5vmin] rounded-3xl">
-          Your watching list
+        <p className="text-[4.5vmin] font-semibold mb-[3vh] w-fit py-[1.5vmin] rounded-3xl">
+          Your watchlist
         </p>
         {user !== null? (<Cards coursesRaw={JSON.stringify(user.subscribed)} addCard={addCard} updateCourse={updateCourse}/> ):
         (<div>Loading...</div>)}       

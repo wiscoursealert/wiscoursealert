@@ -1,4 +1,5 @@
 {
   "apiUrl": "http://localhost:5000/api",
-  "minDelay": 10
+  "minDelay": 10,
+  "contactEmails": ["wiscoursealert@gmail.com"] 
 }

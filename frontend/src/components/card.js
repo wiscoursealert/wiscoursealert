@@ -57,21 +57,33 @@ const Card = ({ cardCourseRaw, updateCourse }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.02] hover:shadow-xl z-0">
-      <div className="h-[28%] rounded-t-3xl border-gray-300 border-x-4 border-t-4 border-b-2">
+    <div className="h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.01] hover:shadow-xl z-0">
+      <div className="h-[20%] rounded-t-3xl border-gray-300 border-x-4 border-t-4 border-b-2">
         <div className="px-[7%] h-full flex flex-col justify-center">
           <div className="flex justify-between">
             <p className="text-[4vmax] sm:text-[2rem] font-bold pb-[0.8vh]">
               {course.course_name}
             </p>
-            <p className="text-[4vmax] sm:text-[2rem] font-black pb-[0.8vh] text-gray-500 font-mono" onClick={close}>
-              X
-            </p>
+            <button className="mb-[0.8vh] hover:bg-gray-300 rounded-md" onClick={close}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 stroke-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
-          <p className="text-[2vmax] sm:text-[1.5rem]">{course.course_title}</p>
         </div>
       </div>
-      <div className="h-[72%] rounded-b-3xl border-gray-300 border-x-4 border-t-2 border-b-4">
+      <div className="h-[80%] rounded-b-3xl border-gray-300 border-x-4 border-t-2 border-b-4">
         <div className="px-[7%] py-[5%] h-full flex flex-col justify-between">
           <p className="text-[3vmax] sm:text-[1.6rem] font-bold">Sections</p>
           <Sections

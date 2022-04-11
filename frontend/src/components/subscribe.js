@@ -40,23 +40,23 @@ const Subscribe = ({handleRouteChange, handlePageChange}) => {
               autoComplete="email"
               required
               className="appearance-none rounded-none relative block w-full px-4 py-2 text-[2.5vmin] font-medium border border-gray-300 placeholder-gray-400 text-gray-500 rounded-t-md focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10"
-              placeholder="Your email address"
+              placeholder="Your @wisc.edu email"
               onChange={handleChange}
             />
           </div>
         </div>
-        <div className="ml-3">
+        <div className="ml-3 w-fit">
           <button
             type="submit"
-            className="group relative w-full flex justify-center transition ease-in-out hover:scale-[1.05] border border-transparent px-4 py-2 text-[2.5vmin] font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+            className="group whitespace-nowrap relative w-fit flex justify-center transition ease-in-out hover:scale-[1.05] border border-transparent px-4 py-2 text-[2.5vmin] font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
           >
-            Subscribe
+            Get Started!
           </button>
         </div>
       </form>
       <div className="flex justify-center mt-5">
         <p
-          className="text-[1.5vmin] font-medium text-red-600 hover:text-red-700"
+          className="text-[1.5vmin] font-medium text-gray-400 "
         >
           Already have an account? Type in your email again to re-retrieve the link to the subscription management portal.
         </p>
