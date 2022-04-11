@@ -79,7 +79,7 @@ const Edit = () => {
         {user !== null? (<Cards coursesRaw={JSON.stringify(user.subscribed)} addCard={addCard} updateCourse={updateCourse}/> ):
         (<div>Loading...</div>)}       
       </div>
-      <Footer handleUpdate={handleUpdate} curDelay={user !== null && user.delay != null? user.delay:config.minDelay}/> 
+      <Footer handleUpdate={handleUpdate} curDelay={user !== null && user.delay !== undefined? user.delay:null}/> 
     </div>
   );
 };
