@@ -69,10 +69,9 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
     <div className="overflow-y-auto h-[60%] w-full">
       {sections.map((section) => {
         const trueSection = section;
-        if(section === null){
+        if(section === null || section === undefined){
           return (<div></div>);
         }
-        console.log(section);
         let attr =
           trueSection.status === "OPEN"
             ? "bg-green-500"

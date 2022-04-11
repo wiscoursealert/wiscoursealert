@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddForm from "./addform";
 import Sections from "./sections";
+import config from "../config.json";
 
-const Card = ({ cardCourse, updateCourse }) => {
-  let [course, setCourse] = useState(cardCourse);
+const Card = ({ cardCourseRaw, updateCourse }) => {
+  let [course, setCourse] = useState(JSON.parse(cardCourseRaw));
+  let [allSections, setAllSections] = useState(null);
 
   const addSection = (section) => {
     for (var own of course.sections) if (own.section_id === section.section_id) return;
@@ -24,6 +26,31 @@ const Card = ({ cardCourse, updateCourse }) => {
     setCourse(temp);
     updateCourse(temp);
   };
+
+  useEffect(() => {
+    (async () => {
+      let asections = null;
+      try{
+        asections = await (await fetch(config.apiUrl + '/sections', {
+          method: 'post',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({subject_id: course.subject_id, course_id: course.course_id})
+        })).json();
+      } catch(e){
+        console.error(e);
+        console.log('Connection Failed');
+        alert('Sections fetching failed, please try again later');       // TODO: decorate this?
+        return;
+      }
+      const trueCourse = JSON.parse(cardCourseRaw);
+      setAllSections(asections);
+      const detailedSections = [];
+      for (const section of trueCourse.sections){
+        detailedSections.push(asections.filter(asection => asection.section_id === section.section_id)[0]);
+      }
+      setCourse(Object.assign(trueCourse, {sections: detailedSections}));
+    })();
+  }, []);
 
   return (
     <div className="h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.02] hover:shadow-xl z-0">
@@ -46,8 +73,7 @@ const Card = ({ cardCourse, updateCourse }) => {
           />
           <AddForm
             addSection={addSection}
-            subjectID={course.subject_id}
-            courseID={course.course_id}
+            allSections={allSections}
           />
         </div>
       </div>

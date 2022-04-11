@@ -16,9 +16,10 @@ const Edit = () => {
     }
     (async () => {
       try{
-        const fullUser = await (await fetch(config.apiUrl + '/users?user_id=' + params.userId)).json();
+        const fullUser = JSON.parse(await (await fetch(config.apiUrl + '/users?user_id=' + params.userId)).text());
         setUser(fullUser);
       } catch(e){
+        console.error(e);
         console.log('Connection Failed');
         alert("User does not exist");
         setUser({subscribed: []});
@@ -70,7 +71,7 @@ const Edit = () => {
         <p className="text-[4vmin] text-white bg-red-700 font-semibold mb-[3vh] w-fit px-[4vmin] py-[1.5vmin] rounded-3xl">
           Your watching list
         </p>
-        {user !== null? (<Cards initialCourses={user.subscribed} addCard={addCard} updateCourse={updateCourse}/> ):
+        {user !== null? (<Cards coursesRaw={JSON.stringify(user.subscribed)} addCard={addCard} updateCourse={updateCourse}/> ):
         (<div>Loading...</div>)}       
       </div>
       <Footer handleUpdate={handleUpdate} curDelay={user !== null && user.delay != null? user.delay:config.minDelay}/> 

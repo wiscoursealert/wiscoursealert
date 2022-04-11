@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
-import config from "../config.json";
+import { useState } from "react";
 
-const AddForm = ({ addSection, subjectID, courseID }) => {
-  let [allSections, setAllSections] = useState(null);
-
+const AddForm = ({ addSection, allSections }) => {
   let [value, setValue] = useState("Select a section");
 
   const getSectionName = (section) => {
@@ -24,22 +21,6 @@ const AddForm = ({ addSection, subjectID, courseID }) => {
     }
     return name;
   };
-
-  useEffect(() => {
-    (async () => {
-      try{
-        setAllSections(await (await fetch(config.apiUrl + '/sections', {
-          method: 'post',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({subject_id: subjectID, course_id: courseID})
-        })).json());
-      } catch(e){
-        console.error(e);
-        console.log('Connection Failed');
-        alert('Sections fetching failed, please try again later');       // TODO: decorate this?
-      }
-    })();
-  }, [subjectID, courseID]);
 
   const handleChange = (event) => {
     setValue(event.target.value);
