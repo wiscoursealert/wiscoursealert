@@ -4,10 +4,12 @@ import Badger from "../images/badger2.png";
 import Subscribe from "../components/subscribe";
 import SignIn from "../components/signin";
 import Contact from "../components/contact";
+import Loading from "../components/loading";
 
 const Login = ({ handlePageChange }) => {
   const [status, setStatus] = useState("subscribe");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleRouteChange = (route) => {
     setStatus(route);
@@ -32,6 +34,7 @@ const Login = ({ handlePageChange }) => {
               <Subscribe
                 handleRouteChange={handleRouteChange}
                 handlePageChange={handlePageChange}
+                setLoading={setLoading}
               />
             ) : (
               <SignIn
@@ -51,6 +54,7 @@ const Login = ({ handlePageChange }) => {
         </div>
       </div>
       <Contact open={open} setOpen={setOpen}/>
+      <Loading open={loading}/>
     </>
   );
 };
