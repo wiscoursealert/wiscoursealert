@@ -13,6 +13,9 @@ const getUser = async (user_id) => {
 };
 
 const addUser = async (email) => {
+  if(!email.match('^[A-Za-z0-9._%+-]+@wisc.edu$')){
+    throw Error("Your must use @wisc.edu email to register");
+  }
   const users = await usersRepository.findEmail(email);
   if (users.length === 0) {
     let uuid = uuid_v4();
