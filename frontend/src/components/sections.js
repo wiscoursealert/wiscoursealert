@@ -39,10 +39,18 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
     var name = "";
     if (section.lecture_name !== undefined)
       name = name.concat("LEC ", section.lecture_name);
-    if (section.discussion_name !== undefined)
-      name = name.concat(" / DIS ", section.discussion_name);
-    if (section.lab_name !== undefined)
-      name = name.concat(" / LAB ", section.lab_name);
+    if (section.discussion_name !== undefined){
+      if(name.length){
+        name = name.concat(" / ");
+      }
+      name = name.concat("DIS ", section.discussion_name);
+    }
+    if (section.lab_name !== undefined){
+      if(name.length){
+        name = name.concat(" / ");
+      }
+      name = name.concat("LAB ", section.lab_name);
+    }
     return name;
   };
 
