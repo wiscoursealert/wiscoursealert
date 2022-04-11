@@ -29,6 +29,14 @@ const addUser = async (email) => {
 };
 
 const updateUser = async ({ user_id, newUser }) => {
+  const dupUsers = await usersRepository.findEmail(newUser.email);
+  if (dupUsers.length === 1){
+    if (dupUsers[0].user_id !== user_id){
+      throw Error("Error: mismatched user_id");
+    }
+  } else{
+    throw Error("Error: user email does not exist");
+  }
   const users = await usersRepository.findUserID(user_id);
   if (users.length === 1) {
     const user = users[0];
