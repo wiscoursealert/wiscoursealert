@@ -60,7 +60,12 @@ const Edit = () => {
   const updateCourse = (course) => {
     for (var i = 0; i < user.subscribed.length; i++) if (user.subscribed[i].course_id === course.course_id) {
       let temp = Object.assign({}, user);
-      temp.subscribed[i] = course;
+      if(course.del){
+        temp.subscribed.splice(i);
+      }
+      else{
+        temp.subscribed[i] = course;
+      }
       setUser(temp);
     }
   }
