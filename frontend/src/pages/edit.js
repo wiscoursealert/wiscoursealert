@@ -25,7 +25,7 @@ const Edit = () => {
         setUser({subscribed: []});
       }
     })();
-  }, [user, params]);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   const addCard = (toAdd) => {
     for (var course of user.subscribed) if (course.course_id === toAdd.course_id) {

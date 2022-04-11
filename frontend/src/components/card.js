@@ -54,7 +54,7 @@ const Card = ({ cardCourseRaw, updateCourse }) => {
       }
       setCourse(Object.assign(trueCourse, {sections: detailedSections}));
     })();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.02] hover:shadow-xl z-0">

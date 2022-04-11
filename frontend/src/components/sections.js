@@ -1,39 +1,4 @@
-import { useEffect } from "react";
-
-let allSections = [
-  {
-    section_id: "000",
-    status: "CLOSED",
-    lecture_name: "002",
-    discussion_name: "001",
-    lab_name: "",
-  },
-  {
-    section_id: "100",
-    status: "OPEN",
-    lecture_name: "001",
-    discussion_name: "001",
-    lab_name: "",
-  },
-  {
-    section_id: "200",
-    status: "WAITLISTED",
-    lecture_name: "001",
-    discussion_name: "002",
-    lab_name: "",
-  },
-  {
-    section_id: "300",
-    status: "CLOSED",
-    lecture_name: "001",
-    discussion_name: "003",
-    lab_name: "001",
-  },
-];
-const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
-  useEffect(() => {
-    async function getAllSections() {}
-  }, []);
+const Sections = ({ deleteSection, sections }) => {
 
   const getSectionName = (section) => {
     var name = "";
@@ -52,12 +17,6 @@ const Sections = ({ deleteSection, sections, subjectID, courseID }) => {
       name = name.concat("LAB ", section.lab_name);
     }
     return name;
-  };
-
-  const findSection = (section) => {
-    for (var allSection of allSections) {
-      if (allSection.section_id === section.section_id) return allSection;
-    }
   };
 
   const handleClick = (event) => {

@@ -1,7 +1,5 @@
 import Card from "./card.js";
 import AddCard from "./addCard.js";
-import { useSearchParams } from "react-router-dom";
-import { useState } from "react";
 
 const Cards = ({coursesRaw, addCard, updateCourse}) => {
 
