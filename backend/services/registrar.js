@@ -2,6 +2,7 @@ const { v4: uuid_v4 } = require("uuid");
 const usersRepository = require("../repositories/users");
 const subscriberService = require("./subscriber");
 const mailerSubscriber = require("../subscribers/mailer")
+const config = require("../config");
 
 const getUser = async (user_id) => {
   const users = await usersRepository.findUserID(user_id);
@@ -39,6 +40,9 @@ const updateUser = async ({ user_id, newUser }) => {
     }
   } else{
     throw Error("Error: user email does not exist");
+  }
+  if(newUser.delay < config.policies.minDelay){
+    throw Error("Error: delay must be at least " + config.policies.minDelay.toString());
   }
   const users = await usersRepository.findUserID(user_id);
   if (users.length === 1) {
