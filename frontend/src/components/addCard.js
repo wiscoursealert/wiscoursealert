@@ -1,14 +1,14 @@
 import { useState } from "react";
 import SearchModal from "./searchModal";
 
-const AddCard = ({addCard}) => {
+const AddCard = ({addCard, addLoading}) => {
   let [open, setOpen] = useState(false);
 
   return (
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex justify-center items-center h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.02] hover:shadow-xl border-4 border-gray-300"
+        className="flex justify-center items-center h-[58vh] sm:max-h-[510px] lg:max-h-[600px] rounded-3xl transition ease-in-out duration-300 hover:scale-[1.01] hover:shadow-xl border-4 border-gray-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +25,7 @@ const AddCard = ({addCard}) => {
           />
         </svg>
       </button>
-      <SearchModal open={open} setOpen={setOpen} addCard={addCard} />
+      <SearchModal open={open} setOpen={setOpen} addCard={addCard} addLoading={addLoading}/>
     </>
   );
 };

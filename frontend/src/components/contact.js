@@ -1,5 +1,6 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import config from "../config.json";
 
 const Contact = ({ open, setOpen }) => {
   const cancelButtonRef = useRef(null);
@@ -65,15 +66,13 @@ const Contact = ({ open, setOpen }) => {
                     Contact Information
                   </Dialog.Title>
                   <div className="mt-2 text-center">
-                    <p className="text-base text-gray-500">Topjbu@wisc.edu</p>
-                    <p className="text-base text-gray-500">
-                      Robinrawin@wisc.edu
-                    </p>
-                    <p className="text-base text-gray-500">Rattee@wisc.edu</p>
+                    {
+                      config.contactEmails.map(email => (<p className="text-base text-gray-500">{email}</p>))
+                    }
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 mt-7 flex justify-center">
+              <div className="mt-7 flex justify-center">
                 <button
                   type="button"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 transition ease-in-out hover:scale-[1.05] bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:w-auto sm:text-sm"

@@ -11,7 +11,7 @@ import config from "../config.json";
   }
 ]*/
 
-const SearchBar = ({addCard}) => {
+const SearchBar = ({addCard, addLoading}) => {
   let [toAdd, setToAdd] = useState({id:"-1"});
   let [key, setKey] = useState("");
   let [courses, setCourses] = useState([]);
@@ -28,6 +28,7 @@ const SearchBar = ({addCard}) => {
 
   const handleSearchCourse = async (event) => {
     event.preventDefault();
+    addLoading(1);
     setCourses([]);
     try{
       setCourses(await (await fetch(config.apiUrl + '/search', {
@@ -39,6 +40,8 @@ const SearchBar = ({addCard}) => {
       console.log('Connection Failed');
       alert('Searching failed, please try again later');       // TODO: decorate this?
     }
+    console.log("HEYYY");
+    addLoading(-1);
   }
 
   const handleAddCourse = (event) => {
@@ -53,20 +56,20 @@ const SearchBar = ({addCard}) => {
   return (
     <div className="w-full h-full overflow-auto">
       <div className="w-full">
-        <p className="text-[4vmax] sm:text-5xl font-bold text-gray-700 mb-5">Search course</p>
-        <form onSubmit={handleSearchCourse} className="flex flex-row justify-between w-full">
+        <p className="text-xl sm:text-5xl font-bold text-gray-700 mb-5">Search for courses</p>
+        <form onSubmit={handleSearchCourse} className="flex flex-row w-full">
           <input
             value={key}
             onChange={handleChange}
-            className="relative block flex-grow px-4 py-2 text-[2.5vmin] font-normal border border-gray-300 placeholder-gray-400 text-gray-500 rounded-lg focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10"
-            placeholder="Search for a course"
+            className="relative block flex-grow px-4 py-2 text-md font-normal border border-gray-300 placeholder-gray-400 text-gray-500 rounded-lg focus:outline-none focus:ring-red-500 focus:border-red-500 focus:z-10"
+            placeholder="(e.g., COMP SCI 577)"
           />
-          <div className="ml-6">
+          <div className="ml-[1vmin]">
             <button
               type="submit"
-              className="group relative h-[100%] w-fit flex justify-center items-center transition ease-in-out border border-transparent px-[2vmin] py-2[1vmin] text-[2.5vmin] font-normal rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+              className="group relative h-[100%] w-fit flex justify-center items-center transition ease-in-out border border-transparent px-[2vmin] py-2[1vmin] text-md font-normal rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
             >
-              Search Course
+              Find
             </button>
           </div>
         </form>
@@ -74,9 +77,9 @@ const SearchBar = ({addCard}) => {
       <div className='flex flex-col mt-4'>
         <button
           onClick={handleAddCourse}
-          className="group relative w-full flex justify-center items-center transition ease-in-out border border-transparent px-[2vmin] py-2[1vmin] text-[2.5vmin] font-normal rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+          className="group relative w-full flex justify-center items-center transition ease-in-out border border-transparent px-[2vmin] py-2 text-md font-normal rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
         >
-          Add Course
+          Add Selected Course
         </button>
         <Courses handleID={handleID} courses={courses}/>
         

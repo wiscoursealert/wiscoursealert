@@ -6,12 +6,12 @@ const Courses = ({ handleID, courses }) => {
           <button
             key={course.course_id}
             onClick={() => handleID(course)}
-            className="border-4 h-[200px] text-left border-gray-300 rounded-3xl transition ease-in-out duration-150 hover:border-red-400 focus:border-red-500"
+            className="border-4 h-[96px] lg:h-[128px] text-left border-gray-300 rounded-3xl transition ease-in-out duration-150 hover:border-red-400 focus:border-red-500"
           >
-            <p className="text-[2rem] lg:text-4xl font-bold text-gray-700 mb-7 mx-[7%]">
+            <p className="text-2xl lg:text-3xl font-bold text-gray-700 mb-2 lg:mb-4 mx-[7%]">
               {course.course_name}
             </p>
-            <p className="text-lg truncate lg:text-xl ml-[7%] mr-[20%]">
+            <p className="text-sm lg:text-base ml-[7%] mr-[20%]">
               {course.course_title}
             </p>
           </button>

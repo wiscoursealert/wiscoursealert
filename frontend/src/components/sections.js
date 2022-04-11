@@ -38,7 +38,7 @@ const Sections = ({ deleteSection, sections }) => {
             ? "bg-red-500"
             : "bg-yellow-500";
         attr = attr.concat(
-          " h-[20%] mb-[1vh] rounded-lg flex items-center transition ease-out duration-300 hover:-translate-y-[2px]"
+          " h-[20%] mb-[1vh] rounded-lg flex items-center"
         );
         return (
           <div className={attr} key={trueSection.section_id}>
