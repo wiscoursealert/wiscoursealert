@@ -9,7 +9,7 @@ const generateLink = (user_id) => {
   if(!validateUUID(user_id)){
     throw new Error("User ID " + user_id + " is not a valid UUID.");
   }
-  let editUrl = config.frontUrl + "/edit?user_id=" + user_id;
+  let editUrl = config.frontUrl + "/edit/" + user_id;
   return editUrl;
 };
 
