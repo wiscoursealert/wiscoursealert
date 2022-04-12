@@ -45,10 +45,10 @@ respondQueue.on('ready', () => {
   queueSize = 0;
 });
 respondQueue.on('error', (err) => {
-  console.err(`A respondQueue error happened: ${err.message}`);
+  console.error(`A respondQueue error happened: ${err.message}`);
 });
 respondQueue.on('failed', (job, err) => {
-  console.err(`Job ${job.id} failed with error ${err.message}`);
+  console.error(`Job ${job.id} failed with error ${err.message}`);
   queueSize -= 1;
 });
 respondQueue.on('succeeded', (job, result) => {

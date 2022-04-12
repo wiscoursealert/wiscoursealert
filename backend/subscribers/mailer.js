@@ -26,10 +26,10 @@ mailQueue.on('ready', () => {
   console.log('mailQueue is now ready');
 });
 mailQueue.on('error', (err) => {
-  console.err(`A mailQueue error happened: ${err.message}`);
+  console.error(`A mailQueue error happened: ${err.message}`);
 });
 mailQueue.on('failed', (job, err) => {
-  console.err(`Job ${job.id} failed with error ${err.message}`);
+  console.error(`Job ${job.id} failed with error ${err.message}`);
 });
 mailQueue.on('succeeded', (job, result) => {
   console.log(`Job ${job.id} succeeded with result: ${result}`);
@@ -62,7 +62,7 @@ mailQueue.process(config.workersCount.mailer, async (job) => {
   try{
     await mailer[job.data.work](job.data.param);
   } catch (err){
-    console.err(err);
+    console.error(err);
     return false;
   }
   return true;

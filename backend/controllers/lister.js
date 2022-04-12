@@ -5,7 +5,7 @@ const getSearchResults = async (req, res) => {
     const temp = await listerService.getSearchResults(req.body.queryString);
     res.send(temp);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500);
   }
 };
@@ -18,7 +18,7 @@ const getSections = async (req, res) => {
     );
     res.send(temp);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500);
   }
 };

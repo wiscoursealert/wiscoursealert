@@ -5,7 +5,7 @@ const getUser = async (req, res) => {
     const user = await registrarService.getUser(req.query.user_id);
     res.json(user);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500);
   }
 };
@@ -15,7 +15,7 @@ const addUser = async (req, res) => {
     const newUser = await registrarService.addUser(req.body.email);
     res.json(newUser);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500);
   }
 };
@@ -28,7 +28,7 @@ const updateUser = async (req, res) => {
     });
     res.json(updatedUser);
   } catch (err) {
-    console.err(err);
+    console.error(err);
     res.status(500);
   }
 };
