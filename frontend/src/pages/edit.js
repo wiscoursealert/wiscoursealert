@@ -79,7 +79,7 @@ const Edit = () => {
     for (var i = 0; i < user.subscribed.length; i++) if (user.subscribed[i].course_id === course.course_id) {
       let temp = Object.assign({}, user);
       if(course.del){
-        temp.subscribed.splice(i);
+        temp.subscribed.splice(i,1);
       }
       else{
         temp.subscribed[i] = course;
