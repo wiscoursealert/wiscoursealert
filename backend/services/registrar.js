@@ -13,7 +13,8 @@ const getUser = async (user_id) => {
   }
 };
 
-const addUser = async (email) => {
+const addUser = async (emailRaw) => {
+  const email = emailRaw.toLowerCase();
   if(!email.match('^[A-Za-z0-9._%+-]+@wisc.edu$')){
     throw Error("Your must use @wisc.edu email to register");
   }
@@ -33,6 +34,7 @@ const addUser = async (email) => {
 };
 
 const updateUser = async ({ user_id, newUser }) => {
+  Object.assign(newUser, {email: newUser.email.toLowerCase()});
   const dupUsers = await usersRepository.findEmail(newUser.email);
   if (dupUsers.length === 1){
     if (dupUsers[0].user_id !== user_id){
