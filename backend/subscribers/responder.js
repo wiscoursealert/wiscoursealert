@@ -63,7 +63,7 @@ const enqueue = async (results, responder=null) => {
   // end of need clean up
   if(queueSize >= maxQueueSize){
     // ignore policy
-    console.log("Queuesize = " + queueSize + ", ignoring");
+    //console.log("Queuesize = " + queueSize + ", ignoring");
     return false;
   }
   let succ = false;
@@ -71,7 +71,7 @@ const enqueue = async (results, responder=null) => {
     queueSize += 1;
     succ = true;
   });
-  console.log("Queuesize = " + (queueSize-1) + "+1, success");
+  //console.log("Queuesize = " + (queueSize-1) + "+1, success");
   return succ;
 };
 

@@ -6,7 +6,7 @@ const updaterService = require("../services/updater");
 // repeat every config.fetchCooldown/1000 seconds (default to 10)
 setIntervalAsync(async () => {
   try{
-    console.log("Fetching and responding...");
+    //console.log("Fetching and responding...");
     let st = Date.now();
     try{
       await updaterService();
