@@ -2,14 +2,15 @@ import {useState} from 'react';
 import config from "../config.json";
 
 const Subscribe = ({handleRouteChange, handlePageChange, addLoading}) => {
-  const [email, setEmail] = useState("")
+  const [emailRaw, setEmailRaw] = useState("")
 
   const handleChange = (event) => {
-    setEmail(event.target.value);
+    setEmailRaw(event.target.value);
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const email = emailRaw.trim().toLowerCase();
     if(!email.match('^[A-Za-z0-9._%+-]+@wisc.edu$')){
       alert('Your must use @wisc.edu email to register');
       return;
