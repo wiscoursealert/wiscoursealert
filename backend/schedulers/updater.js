@@ -8,7 +8,12 @@ setIntervalAsync(async () => {
   try{
     console.log("Fetching and responding...");
     let st = Date.now();
-    await updaterService();
+    try{
+      await updaterService();
+    } catch (e){
+      console.error(e);
+      // must not throw
+    }
     console.log("Fetching and enqueing complete; time used = " + (Date.now()-st) + " ms; sleeping for " + config.fetchCooldown + " ms.");
   } catch (err) {
     console.error(err);
