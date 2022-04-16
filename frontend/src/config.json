@@ -1,5 +1,5 @@
 {
-  "apiUrl": "http://localhost:5000/api",
+  "apiUrl": "https://wiscoursealert.uc.r.appspot.com/api",
   "minDelay": 10,
   "contactEmails": ["wiscoursealert@gmail.com"] 
 }
