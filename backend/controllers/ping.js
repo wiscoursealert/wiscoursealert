@@ -1,5 +1,5 @@
 const ping = async (req, res) => {
-  res.send("Pong!");
+  res.send("Pong!!");
 };
 
 module.exports = {
