@@ -40,7 +40,6 @@ const SearchBar = ({addCard, addLoading}) => {
       console.log('Connection Failed');
       alert('Searching failed, please try again later');       // TODO: decorate this?
     }
-    console.log("HEYYY");
     addLoading(-1);
   }
 
