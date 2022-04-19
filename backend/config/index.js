@@ -8,6 +8,7 @@ module.exports = {
 		host: process.env.REDIS_HOST,
 		port: process.env.REDIS_PORT,
 		password: process.env.REDIS_PASS,
+		retry_strategy: (() => 10000)
 	}, 
 	mongoDb: {
 		uri: process.env.MONGODB_URI
