@@ -12,13 +12,16 @@ const run = async (results, mailer=null) => {
 };
 
 const processCourses = async (results, mailer) => {
-  results.map(course => {
+  let promises = results.map(async course => {
     try{
-      return processCourse(course, mailer);
+      await processCourse(course, mailer);
     } catch (e){
       console.error(e);
     }
   });
+  for await (let prom of promises){
+    await prom;
+  }
 }
 
 const processCourse = async (results, mailer) => {
